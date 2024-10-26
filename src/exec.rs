@@ -114,8 +114,8 @@ pub trait UpDuct {
     Run with the stdout sent to wherever `stdout_fn` points to.
 
     You should normally use this instead of the `.run()` function, to make sure you don't
-    accidentally write stdout to liv's stdout, as this pollutes stdout, and may cause
-    liv commands to fail for users.
+    accidentally write stdout to up's stdout, as this pollutes stdout, and may cause
+    up commands to fail for users.
     */
     fn run_with(&self, stdout_fn: fn(&Expression) -> Expression) -> io::Result<Output>;
 

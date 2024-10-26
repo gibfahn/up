@@ -1,10 +1,12 @@
-//! CLI options passed to `up` commands.
+//! Options passed to `up` commands.
 mod paths;
 pub(crate) mod start_time;
 
 use crate::opts::paths::TempDir;
 use crate::opts::start_time::StartTime;
 use camino::Utf8PathBuf;
+use clap::builder::styling::AnsiColor;
+use clap::builder::styling::Styles;
 use clap::Parser;
 use clap::ValueEnum;
 use clap::ValueHint;
@@ -25,6 +27,13 @@ pub(crate) const SELF_UPDATE_URL: &str =
 /// URL to use to download the latest release of up for macOS.
 pub(crate) const SELF_UPDATE_URL: &str =
     "https://github.com/gibfahn/up/releases/latest/download/up-darwin";
+
+/// `up --help` terminal styling.
+const STYLES: Styles = Styles::styled()
+    .header(AnsiColor::Green.on_default().bold())
+    .usage(AnsiColor::Green.on_default().bold())
+    .literal(AnsiColor::Blue.on_default().bold())
+    .placeholder(AnsiColor::Cyan.on_default());
 
 /// Builds the Args struct from CLI input and from environment variable input.
 #[must_use]
@@ -53,13 +62,14 @@ There are also a number of libraries built into up, that can be accessed directl
 up task configs, e.g. `up link` to link dotfiles.
 
 For debugging, run with `RUST_LIB_BACKTRACE=1` to show error/panic traces.
-Logs from the latest run are available at $TMPDIR/up/logs/up_latest.log by default.
+Logs from the latest run are available at $TMPDIR/up/logs/up_<timestamp>.log by default.
+Parallel tasks are run with rayon, so you can control the number of threads used via `RAYON_NUM_THREADS`, e.g. `RAYON_NUM_THREADS=1 up` to run everything sequentially.
 */
 #[derive(Debug, Parser)]
-#[clap(version)]
+#[clap(version, styles = STYLES)]
 pub struct Opts {
-    /// Set the logging level explicitly (options: Off, Error, Warn, Info,
-    /// Debug, Trace).
+    /// Set the logging level explicitly (options: off, error, warn, info,
+    /// debug, trace).
     #[clap(
         long,
         short = 'l',
@@ -75,8 +85,8 @@ pub struct Opts {
     #[clap(long, env = "UP_TEMP_DIR", default_value_t, value_hint = ValueHint::DirPath, alias = "up-dir")]
     pub temp_dir: TempDir,
 
-    /// Set the file logging level explicitly (options: Off, Error, Warn, Info,
-    /// Debug, Trace).
+    /// Set the file logging level explicitly (options: off, error, warn, info,
+    /// debug, trace).
     #[clap(long, default_value = "trace", env = "FILE_RUST_LOG")]
     pub file_log_level: String,
 
@@ -115,8 +125,12 @@ pub enum Color {
 /// Optional subcommand (e.g. the "link" in "up link").
 #[derive(Debug, Parser)]
 pub(crate) enum SubCommand {
-    /// Run the update scripts. If you don't provide a subcommand this is the default action.
-    /// If you want to pass Run args you will need to specify the subcommand.
+    /**
+    Run the update tasks.
+
+    If you don't provide a subcommand this is the default action.
+    If you want to pass Run args you will need to specify the subcommand.
+    */
     Run(RunOptions),
     /// Symlink your dotfiles from a git repo to your home directory.
     Link(LinkOptions),
@@ -132,11 +146,11 @@ pub(crate) enum SubCommand {
     Completions(CompletionsOptions),
     /// List available tasks.
     List(RunOptions),
-    /// Write the up yaml schema.
+    /// Write the up.yaml schema.
     Schema(SchemaOptions),
 }
 
-/// CLI options passed to `up run`.
+/// Options passed to `up run`.
 #[derive(Debug, Parser, Default)]
 pub(crate) struct RunOptions {
     /// Run the bootstrap list of tasks in series first, then run the rest in
@@ -192,7 +206,7 @@ pub(crate) struct RunOptions {
     pub(crate) exclude_tasks: Option<Vec<String>>,
 }
 
-/// CLI options passed to `up link`.
+/// Options passed to `up link`.
 #[derive(Debug, Parser, Default, Serialize, Deserialize)]
 pub(crate) struct LinkOptions {
     /// Path where your dotfiles are kept (hopefully in source control).
@@ -203,7 +217,7 @@ pub(crate) struct LinkOptions {
     pub(crate) to_dir: String,
 }
 
-/// CLI options passed to `up git`.
+/// Options passed to `up git`.
 #[derive(Debug, Default, Parser)]
 pub struct GitOptions {
     /// URL of git repo to download.
@@ -241,7 +255,7 @@ pub(crate) struct SchemaOptions {
     pub(crate) path: Option<Utf8PathBuf>,
 }
 
-/// CLI options passed to `up self`.
+/// Options passed to `up self`.
 #[derive(Debug, Parser, Serialize, Deserialize)]
 pub(crate) struct UpdateSelfOptions {
     /// URL to download update from.
@@ -254,7 +268,7 @@ pub(crate) struct UpdateSelfOptions {
     pub(crate) always_update: bool,
 }
 
-/// CLI options passed to `up completions`.
+/// Options passed to `up completions`.
 #[derive(Debug, Parser)]
 pub(crate) struct CompletionsOptions {
     /// Shell for which to generate completions.
@@ -280,7 +294,7 @@ pub(crate) enum GenerateLib {
     Defaults(GenerateDefaultsConfig),
 }
 
-/// Options
+/// Options passed to `up generate git`.
 #[derive(Debug, Parser, Serialize, Deserialize)]
 pub struct GenerateGitConfig {
     /// Path to yaml file to update.
@@ -333,7 +347,7 @@ pub enum DefaultsSubcommand {
     Write(DefaultsWriteOptions),
 }
 
-/// CLI options passed to `up defaults read`.
+/// Options passed to `up defaults read`.
 #[derive(Debug, Parser, Serialize, Deserialize)]
 pub struct DefaultsReadOptions {
     /// Read from the global domain. If you set this, do not also pass a domain argument.
@@ -347,7 +361,7 @@ pub struct DefaultsReadOptions {
     pub(crate) key: Option<String>,
 }
 
-/// CLI options passed to `up defaults write`.
+/// Options passed to `up defaults write`.
 #[derive(Debug, Parser, Serialize, Deserialize)]
 pub struct DefaultsWriteOptions {
     /// Read from the global domain. If you set this, do not also pass a domain argument.

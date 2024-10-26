@@ -72,7 +72,7 @@ impl AssertCmdExt for assert_cmd::assert::Assert {
     fn eprint_stdout_stderr(self) -> Self {
         let output = self.get_output();
         eprintln!(
-            "LIV COMMAND STDOUT:\n-------------------\n<<<<\n{stdout}\n>>>>\n\nLIV COMMAND \
+            "UP COMMAND STDOUT:\n-------------------\n<<<<\n{stdout}\n>>>>\n\nUP COMMAND \
              STDERR:\n-------------------\n<<<<\n{stderr}\n>>>>",
             stdout = String::from_utf8_lossy(&output.stdout),
             stderr = String::from_utf8_lossy(&output.stderr),

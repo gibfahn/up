@@ -9,9 +9,9 @@ cd $project_dir
 
 set -x
 
-# Generates target/aarch64-unknown-linux-musl/release/liv
+# Generates target/aarch64-unknown-linux-musl/release/up
 meta/cargo-docker --arch arm64 -- bash -cex 'rustup component add clippy rustfmt && cargo test --release --no-fail-fast --color=always -- --include-ignored'
-# Generates target/x86_64-unknown-linux-musl/release/liv
+# Generates target/x86_64-unknown-linux-musl/release/up
 meta/cargo-docker --arch amd64 -- bash -cex 'rustup component add clippy rustfmt && cargo test --release --no-fail-fast --color=always -- --include-ignored'
 
 for arch in arm64 amd64; do
