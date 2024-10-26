@@ -39,13 +39,13 @@ path = "src/main.rs"
 [dependencies]
 camino = { version = "1.1.9", features = ["serde1"] }
 chrono = "0.4.38"
-clap = { version = "4.5.17", features = [
+clap = { version = "4.5.20", features = [
   "derive",
   "env",
   "string",
   "wrap_help",
 ] }
-clap_complete = "4.5.28"
+clap_complete = "4.5.35"
 color-eyre = "0.6.3"
 dirs = "5.0.1"
 displaydoc = "0.2.5"
@@ -61,17 +61,17 @@ indicatif = { version = "0.17.8", features = ["rayon"] }
 log = "0.4.22"
 plist = "1.7.0"
 rayon = "1.10.0"
-reqwest = { version = "0.12.7", features = ["blocking", "json"] }
+reqwest = { version = "0.12.8", features = ["blocking", "json"] }
 ring = "0.17.8"
 schemars = "0.8.21"
 semver = "1.0.23"
-serde = "1.0.210"
-serde_derive = "1.0.210"
-serde_json = "1.0.128"
+serde = "1.0.213"
+serde_derive = "1.0.213"
+serde_json = "1.0.132"
 serde_yaml = "0.9.34"
 shell-escape = "0.1.5"
 shellexpand = "3.1.0"
-thiserror = "1.0.63"
+thiserror = "1.0.65"
 toml = "0.8.19"
 tracing = "0.1.40"
 tracing-error = "0.2.0"
