@@ -1,5 +1,20 @@
 # Requires nightly Rust/Clippy.
 
+# https://rust-lang.github.io/rust-clippy/master/index.html#multiple_crate_versions
+allowed-duplicate-crates = [
+  "regex-automata",
+  "regex-syntax",
+  "windows-sys",
+  "windows-targets",
+  "windows_aarch64_gnullvm",
+  "windows_aarch64_msvc",
+  "windows_i686_gnu",
+  "windows_i686_msvc",
+  "windows_x86_64_gnu",
+  "windows_x86_64_gnullvm",
+  "windows_x86_64_msvc",
+]
+
 # https://rust-lang.github.io/rust-clippy/master/index.html#unwrap_used
 allow-unwrap-in-tests = true
 
