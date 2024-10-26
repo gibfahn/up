@@ -4,6 +4,7 @@ use camino::Utf8PathBuf;
 use color_eyre::Result;
 use itertools::Itertools;
 use std::collections::HashMap;
+use testutils::ensure_eq;
 use testutils::ensure_utils;
 use testutils::AssertCmdExt;
 
@@ -27,22 +28,24 @@ fn test_up_list_passing() -> Result<()> {
         Utf8PathBuf::try_from(cargo_bin("up")).unwrap(),
     );
 
-    itertools::assert_equal(
-        ["link", "run_self_cmd", "skip_self_cmd"],
+    ensure_eq!(
+        vec!["link", "run_self_cmd", "skip_self_cmd"],
         check_list(&[], &envs, &temp_dir)?
             .split_whitespace()
-            .sorted(),
+            .sorted()
+            .collect_vec(),
     );
 
-    itertools::assert_equal(
-        ["link", "skip_self_cmd"],
+    ensure_eq!(
+        vec!["link", "skip_self_cmd"],
         check_list(
             &["--tasks", "link", "--tasks", "skip_self_cmd"],
             &envs,
             &temp_dir,
         )?
         .split_whitespace()
-        .sorted(),
+        .sorted()
+        .collect_vec(),
     );
 
     Ok(())
@@ -66,5 +69,5 @@ fn check_list(
 
     ensure_utils::nothing_at(&temp_dir.join("link_dir/home_dir/file_to_link"))?;
 
-    return Ok(String::from_utf8_lossy(&cmd_assert.get_output().stdout).to_string());
+    Ok(String::from_utf8_lossy(&cmd_assert.get_output().stdout).to_string())
 }

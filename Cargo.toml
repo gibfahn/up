@@ -80,6 +80,9 @@ url = "2.5.2"
 uzers = "0.12.1"
 walkdir = "2.5.0"
 tracing-indicatif = "0.3.6"
+clap-markdown = "0.1.4"
+clap_mangen = "0.2.24"
+pretty_assertions = "1.4.1"
 
 [dev-dependencies]
 assert_cmd = "2.0.16"

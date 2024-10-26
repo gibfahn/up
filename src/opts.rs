@@ -62,10 +62,10 @@ There are also a number of libraries built into up, that can be accessed directl
 up task configs, e.g. `up link` to link dotfiles.
 
 For debugging, run with `RUST_LIB_BACKTRACE=1` to show error/panic traces.
-Logs from the latest run are available at $TMPDIR/up/logs/up_<timestamp>.log by default.
+Logs from the latest run are available at `$TMPDIR/up/logs/up_<timestamp>.log` by default.
 Parallel tasks are run with rayon, so you can control the number of threads used via `RAYON_NUM_THREADS`, e.g. `RAYON_NUM_THREADS=1 up` to run everything sequentially.
 */
-#[derive(Debug, Parser)]
+#[derive(Debug, Clone, Parser)]
 #[clap(version, styles = STYLES)]
 pub struct Opts {
     /// Set the logging level explicitly (options: off, error, warn, info,
@@ -123,7 +123,7 @@ pub enum Color {
 }
 
 /// Optional subcommand (e.g. the "link" in "up link").
-#[derive(Debug, Parser)]
+#[derive(Debug, Clone, Parser)]
 pub(crate) enum SubCommand {
     /**
     Run the update tasks.
@@ -142,16 +142,15 @@ pub(crate) enum SubCommand {
     Generate(GenerateOptions),
     /// Update the up CLI itself.
     Self_(UpdateSelfOptions),
-    /// Generate shell completions to stdout.
-    Completions(CompletionsOptions),
+    /// Generate various docs or completions for up.
+    Doc(DocOptions),
+
     /// List available tasks.
     List(RunOptions),
-    /// Write the up.yaml schema.
-    Schema(SchemaOptions),
 }
 
 /// Options passed to `up run`.
-#[derive(Debug, Parser, Default)]
+#[derive(Debug, Clone, Parser, Default)]
 pub(crate) struct RunOptions {
     /// Run the bootstrap list of tasks in series first, then run the rest in
     /// parallel. Designed for first-time setup.
@@ -207,7 +206,7 @@ pub(crate) struct RunOptions {
 }
 
 /// Options passed to `up link`.
-#[derive(Debug, Parser, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Default, Serialize, Deserialize)]
 pub(crate) struct LinkOptions {
     /// Path where your dotfiles are kept (hopefully in source control).
     #[clap(short = 'f', long = "from", default_value = "~/code/dotfiles", value_hint = ValueHint::DirPath)]
@@ -218,7 +217,7 @@ pub(crate) struct LinkOptions {
 }
 
 /// Options passed to `up git`.
-#[derive(Debug, Default, Parser)]
+#[derive(Debug, Clone, Default, Parser)]
 pub struct GitOptions {
     /// URL of git repo to download.
     #[clap(long, value_hint = ValueHint::Url)]
@@ -241,7 +240,7 @@ pub struct GitOptions {
 }
 
 /// Options passed to `up generate`.
-#[derive(Debug, Parser)]
+#[derive(Debug, Clone, Parser)]
 pub(crate) struct GenerateOptions {
     /// Lib to generate.
     #[clap(subcommand)]
@@ -249,14 +248,22 @@ pub(crate) struct GenerateOptions {
 }
 
 /// Options passed to `up schema`.
-#[derive(Debug, Parser)]
+#[derive(Debug, Clone, Parser)]
 pub(crate) struct SchemaOptions {
     /// Lib to generate. Defaults to writing to stdout.
     pub(crate) path: Option<Utf8PathBuf>,
 }
 
+/// Arguments for the `liv generate manpages` subcommand.
+#[derive(Debug, Clone, Parser)]
+pub struct ManpagesOptions {
+    /// Directory into which to write the generated manpages.
+    #[clap(long, value_hint = ValueHint::DirPath)]
+    pub(crate) output_dir: Utf8PathBuf,
+}
+
 /// Options passed to `up self`.
-#[derive(Debug, Parser, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Serialize, Deserialize)]
 pub(crate) struct UpdateSelfOptions {
     /// URL to download update from.
     #[clap(long, default_value = SELF_UPDATE_URL, value_hint = ValueHint::Url)]
@@ -268,8 +275,56 @@ pub(crate) struct UpdateSelfOptions {
     pub(crate) always_update: bool,
 }
 
+/// Options passed to `up doc`.
+#[derive(Debug, Clone, Parser)]
+pub(crate) struct DocOptions {
+    /// Type of documentation to generate.
+    #[clap(subcommand)]
+    pub(crate) subcmd: DocSubcommand,
+}
+
+/// Subcommands supported by `up doc`.
+#[derive(Debug, Clone, Parser)]
+pub(crate) enum DocSubcommand {
+    /**
+    Generate shell completions to stdout.
+
+    Completions are printed to stdout. They are designed to be written to a file.
+
+    EXAMPLES:
+
+    ❯ up doc completions zsh | sudo tee >/dev/null /usr/local/share/zsh/site-functions/_up
+    */
+    Completions(CompletionsOptions),
+    /**
+    Write the up task yaml schema.
+
+    EXAMPLES:
+
+    ❯ up doc schema --path /path/to/up-task-schema.json
+    */
+    Schema(SchemaOptions),
+    /**
+    Generate man pages for liv and its subcommands.
+
+    Manpages are generated into the output directory specified by `--output-dir`.
+
+    EXAMPLES:
+
+    ❯ liv generate manpages --output-dir /usr/local/share/man/man1/
+    */
+    #[clap(visible_alias = "man")]
+    Manpages(ManpagesOptions),
+    /**
+    Print a markdown file with documentation for up and its subcommands.
+
+    Markdown file contents are written to the stdout.
+    */
+    Markdown,
+}
+
 /// Options passed to `up completions`.
-#[derive(Debug, Parser)]
+#[derive(Debug, Clone, Parser)]
 pub(crate) struct CompletionsOptions {
     /// Shell for which to generate completions.
     #[clap(value_enum)]
@@ -286,7 +341,7 @@ impl Default for UpdateSelfOptions {
 }
 
 /// Subcommands supported by `up generate`.
-#[derive(Debug, Parser)]
+#[derive(Debug, Clone, Parser)]
 pub(crate) enum GenerateLib {
     /// Generate a git repo.
     Git(GenerateGitConfig),
@@ -295,7 +350,7 @@ pub(crate) enum GenerateLib {
 }
 
 /// Options passed to `up generate git`.
-#[derive(Debug, Parser, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Serialize, Deserialize)]
 pub struct GenerateGitConfig {
     /// Path to yaml file to update.
     #[clap(long, value_hint = ValueHint::FilePath)]
@@ -317,7 +372,7 @@ pub struct GenerateGitConfig {
 }
 
 /// Options passed to `up generate defaults`.
-#[derive(Debug, Parser, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Serialize, Deserialize)]
 pub struct GenerateDefaultsConfig {
     /// Path to yaml file to update.
     #[clap(long, value_hint = ValueHint::FilePath)]
@@ -325,7 +380,7 @@ pub struct GenerateDefaultsConfig {
 }
 
 /// Options passed to `up defaults`.
-#[derive(Debug, Parser, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Serialize, Deserialize)]
 pub struct DefaultsOptions {
     /// Read from the current host, same as `defaults -currentHost`.
     #[clap(long = "currentHost")]
@@ -336,7 +391,7 @@ pub struct DefaultsOptions {
 }
 
 /// Subcommands supported by `up defaults`.
-#[derive(Debug, Parser, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Serialize, Deserialize)]
 pub enum DefaultsSubcommand {
     /// Read a defaults option and print it to the stdout as yaml.
     Read(DefaultsReadOptions),
@@ -348,7 +403,7 @@ pub enum DefaultsSubcommand {
 }
 
 /// Options passed to `up defaults read`.
-#[derive(Debug, Parser, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Serialize, Deserialize)]
 pub struct DefaultsReadOptions {
     /// Read from the global domain. If you set this, do not also pass a domain argument.
     #[clap(short = 'g', long = "globalDomain")]
@@ -362,7 +417,7 @@ pub struct DefaultsReadOptions {
 }
 
 /// Options passed to `up defaults write`.
-#[derive(Debug, Parser, Serialize, Deserialize)]
+#[derive(Debug, Clone, Parser, Serialize, Deserialize)]
 pub struct DefaultsWriteOptions {
     /// Read from the global domain. If you set this, do not also pass a domain argument.
     #[clap(short = 'g', long = "globalDomain")]

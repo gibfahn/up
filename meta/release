@@ -112,8 +112,12 @@ main() {
     gsed -i -E "0,/^version = \"${last_release?}\"\$/s//version = \"${new_version?}\"/" Cargo.toml
     log_and_run cargo check --release # Bumps version in lockfile too.
 
+    # Update the command-line help text.
+    cargo run -- doc markdown >docs/CommandLineHelp-macOS.md
+    meta/cargo-docker --pull -- cargo run --color=always -- doc markdown >docs/CommandLineHelp-Linux.md
+
     log_section "Committing version updates..."
-    git add Cargo.toml Cargo.lock CHANGELOG.md
+    git add Cargo.toml Cargo.lock CHANGELOG.md docs/CommandLineHelp-macOS.md docs/CommandLineHelp-Linux.md
     git commit -m "chore: bump version to ${new_version?}"
     git show --stat | cat # Check version is correct.
     echo >&2 "Does this look correct?"
@@ -127,7 +131,7 @@ main() {
   fi
 
   # Generate the JSON schema for a task.
-  cargo run -- schema $task_schema_json
+  cargo run -- doc schema $task_schema_json
 
   log_section "Running end-to-end tests..."
   # Run End-to-End tests and build Linux binaries:

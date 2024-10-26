@@ -67,6 +67,7 @@ use tasks::TasksDir;
 use tracing::trace;
 
 mod config;
+mod docs;
 pub mod env;
 pub mod errors;
 pub mod exec;
@@ -90,7 +91,7 @@ pub const UP_BUNDLE_ID: &str = "co.fahn.up";
 ///
 /// [Opts]: crate::opts::Opts
 pub fn run(opts: Opts) -> Result<()> {
-    match opts.cmd {
+    match opts.cmd.clone() {
         Some(SubCommand::Link(link_options)) => {
             tasks::link::run(link_options, &opts.temp_dir)?;
         }
@@ -126,11 +127,8 @@ pub fn run(opts: Opts) -> Result<()> {
                 generate::run(&config)?;
             }
         },
-        Some(SubCommand::Completions(ref cmd_opts)) => {
-            tasks::completions::run(cmd_opts);
-        }
-        Some(SubCommand::Schema(ref cmd_opts)) => {
-            tasks::schema::run(cmd_opts)?;
+        Some(SubCommand::Doc(cmd_opts)) => {
+            docs::run(cmd_opts)?;
         }
         Some(SubCommand::List(ref _cmd_opts)) => {
             let config = UpConfig::from(opts)?;

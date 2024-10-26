@@ -6,7 +6,7 @@ use color_eyre::Result;
 use schemars::schema_for;
 
 /// Run the `up schema` command.
-pub(crate) fn run(cmd_opts: &SchemaOptions) -> Result<()> {
+pub(crate) fn run(cmd_opts: SchemaOptions) -> Result<()> {
     let SchemaOptions { path } = cmd_opts;
 
     let schema = schema_for!(TaskConfig);

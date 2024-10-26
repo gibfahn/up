@@ -52,7 +52,7 @@ main() {
 
   if [[ -n $pull_image ]]; then
     set -x
-    vessel pull $image
+    docker pull $image
     { set +x; } 2>/dev/null
   fi
 

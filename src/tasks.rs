@@ -32,11 +32,9 @@ use tracing::trace;
 use tracing::warn;
 use tracing_indicatif::span_ext::IndicatifSpanExt;
 
-pub mod completions;
 pub mod defaults;
 pub mod git;
 pub mod link;
-pub(crate) mod schema;
 pub mod task;
 pub mod update_self;
 

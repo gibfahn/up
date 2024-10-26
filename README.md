@@ -30,14 +30,9 @@ Or if you use homebrew you can install it via:
 brew install gibfahn/tap/up
 ```
 
-symlinks the files in `dotfiles` into the matching directory in `~` (so `~/.config/git/config` becomes a link to
-`~/code/dotfiles/.config/git/config`).
+## Usage
 
-### Update
-
-Coming soon.
-
-Updates all the software on your machine.
+See [CommandLineHelp-macOS.md](https://github.com/gibfahn/up/tree/main/docs/CommandLineHelp-macOS.md) or [CommandLineHelp-Linux.md](https://github.com/gibfahn/up/tree/main/docs/CommandLineHelp-Linux.md) (or run `up --help` or `man up` locally) for full usage.
 
 ## Contributing and Developing
 
