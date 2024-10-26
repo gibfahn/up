@@ -196,7 +196,7 @@ fn get_fallback_config_path(
     if !fallback_url.contains("://") {
         fallback_url = format!("https://github.com/{fallback_url}");
     }
-    let fallback_repo_path = temp_dir.join("up-rs/fallback_repo");
+    let fallback_repo_path = temp_dir.join("up/fallback_repo");
     files::create_dir_all(&fallback_repo_path)?;
 
     let fallback_config_path = fallback_repo_path.join(fallback_path);

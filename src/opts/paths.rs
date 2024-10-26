@@ -37,7 +37,7 @@ impl Default for TempDir {
     fn default() -> Self {
         let mut temp_dir = Utf8PathBuf::try_from(std::env::temp_dir())
             .expect("Expected default temporary directory for system to be valid UTF-8");
-        temp_dir.push("up-rs");
+        temp_dir.push("up");
         Self(temp_dir)
     }
 }

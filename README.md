@@ -1,11 +1,11 @@
-# up-rs
+# up
 
-[![Latest Version (crates.io)](https://img.shields.io/crates/v/up-rs.svg)](https://crates.io/crates/up-rs)
-[![Latest Version (lib.rs)](https://img.shields.io/crates/v/up-rs.svg)](https://lib.rs/crates/up-rs)
-[![Documentation (docs.rs)](https://docs.rs/up-rs/badge.svg)](https://docs.rs/up-rs)
+[![Latest Version (crates.io)](https://img.shields.io/crates/v/up.svg)](https://crates.io/crates/up)
+[![Latest Version (lib.rs)](https://img.shields.io/crates/v/up.svg)](https://lib.rs/crates/up)
+[![Documentation (docs.rs)](https://docs.rs/up/badge.svg)](https://docs.rs/up)
 ![Master CI Status](https://github.com/gibfahn/up-rs/workflows/Rust/badge.svg)
 
-I use this to keep my machine up to date. It does a couple of different things.
+Wrapper tool to keep a dev machine up to date. It has a few different features that help with this.
 
 See `up --help` for more details.
 
@@ -14,14 +14,14 @@ See `up --help` for more details.
 The binary is self-contained, you can simply download it and mark the binary as executable:
 
 ```shell
-curl --create-dirs -Lo ~/bin/up https://github.com/gibfahn/up-rs/releases/latest/download/up-$(uname)
+curl --create-dirs -Lo ~/bin/up https://github.com/gibfahn/up/releases/latest/download/up-$(uname)
 chmod +x ~/bin/up
 ```
 
 Or if you have Cargo on your system you can also build it from source:
 
 ```shell
-cargo install up-rs
+cargo install up
 ```
 
 ## Subcommands

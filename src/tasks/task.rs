@@ -78,7 +78,7 @@ pub struct TaskConfig {
     /// Whether to run this by default, or only if required.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub auto_run: Option<bool>,
-    /// Run library: up-rs library to use for this task. Either use this or
+    /// Run library: up library to use for this task. Either use this or
     /// `run_cmd` + `run_if_cmd`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub run_lib: Option<String>,

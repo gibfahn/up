@@ -96,13 +96,13 @@ pub(super) fn set_remote_head(
                     &remote_ref,
                     &remote_head,
                     true,
-                    "up-rs overwrite remote head",
+                    "up overwrite remote head",
                 )?;
                 did_work = true;
             }
         }
         Err(e) if e.code() == ErrorCode::NotFound => {
-            repo.reference_symbolic(&remote_ref, &remote_head, false, "up-rs set remote head")?;
+            repo.reference_symbolic(&remote_ref, &remote_head, false, "up set remote head")?;
             did_work = true;
         }
         Err(e) => return Err(e.into()),

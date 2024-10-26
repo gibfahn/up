@@ -19,7 +19,7 @@ cd $project_dir
 export RUSTFLAGS="-D warnings"
 
 # Set trace logs for tests using test_log::test
-export RUST_LOG=up_rs=trace
+export RUST_LOG=up=trace
 
 # Don't send SIGTTOU to background jobs that write to the tty. Theoretically fixes this in busy commands:
 # [1]  + 82656 suspended (tty output)  cargo run
@@ -75,7 +75,7 @@ main() {
   fi
 
   # Takes a line like:
-  # `## [0.13.4](https://github.com/gibfahn/up-rs/releases/tag/0.13.4) (2023-02-07)`
+  # `## [0.13.4](https://github.com/gibfahn/up/releases/tag/0.13.4) (2023-02-07)`
   # and extracts the `0.13.4`.
   changelog_version=$(awk <CHANGELOG.md '{ if ($1 == "##") { print $2; exit; }}' | sed -E 's/\[([^]]+)].*/\1/')
   last_release=$(gh release list -L 1 | awk '{print $1}')
@@ -141,7 +141,7 @@ main() {
   cp target/aarch64-unknown-linux-musl/release/up $linux_arm64_binary
 
 
-  latest_crate_version=$(curl https://crates.io/api/v1/crates/up-rs | jq -r .crate.newest_version)
+  latest_crate_version=$(curl https://crates.io/api/v1/crates/up | jq -r .crate.newest_version)
   if [[ $latest_crate_version == $new_version ]]; then
     prompt_to_skip "Skipping cargo publish as latest release is already $latest_crate_version."
   else

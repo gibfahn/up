@@ -10,7 +10,7 @@ use testutils::ensure_eq;
 use testutils::AssertCmdExt;
 use tracing::debug;
 use tracing::info;
-use up_rs::exec::UpDuct;
+use up::exec::UpDuct;
 
 /**
 Key that is in the global plist on a newly setup machine, and that has the same value as yaml and as returned by the `defaults read` command.
@@ -139,7 +139,7 @@ struct TestCase {
 fn test_defaults_write_local() -> Result<()> {
     let temp_dir = testutils::temp_dir("up", testutils::function_path!()).unwrap();
 
-    let domain = format!("co.fahn.up-rs.test-{}", testutils::function_path!());
+    let domain = format!("co.fahn.up.test-{}", testutils::function_path!());
 
     let test_values = [
         TestCase {

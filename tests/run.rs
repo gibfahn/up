@@ -9,7 +9,7 @@ use testutils::ensure_eq;
 use testutils::ensure_utils;
 use testutils::AssertCmdExt;
 #[cfg(target_os = "macos")]
-use up_rs::exec::UpDuct;
+use up::exec::UpDuct;
 
 #[cfg(target_os = "macos")]
 const EXPECTED_DEFAULTS_VALUE: &str = r#"{
@@ -46,11 +46,11 @@ fn test_up_run_passing() -> Result<()> {
     .unwrap();
 
     #[cfg(target_os = "macos")]
-    let test_plist = "co.fahn.up-rs.test-up_run_passing";
+    let test_plist = "co.fahn.up.test-up_run_passing";
 
     #[cfg(target_os = "macos")]
     {
-        _ = up_rs::cmd!("defaults", "delete", test_plist).run_with(Expression::stdout_to_stderr);
+        _ = up::cmd!("defaults", "delete", test_plist).run_with(Expression::stdout_to_stderr);
     }
 
     let mut cmd = testutils::crate_binary_cmd("up", &temp_dir)?;
@@ -88,7 +88,7 @@ fn test_up_run_passing() -> Result<()> {
             cmd!(
                 "defaults",
                 "read-type",
-                "co.fahn.up-rs.test-up_run_passing",
+                "co.fahn.up.test-up_run_passing",
                 "NSNavPanelExpandedStateForSaveMode"
             )
             .read()
@@ -100,7 +100,7 @@ fn test_up_run_passing() -> Result<()> {
             cmd!(
                 "defaults",
                 "read-type",
-                "co.fahn.up-rs.test-up_run_passing",
+                "co.fahn.up.test-up_run_passing",
                 "autohide-time-modifier"
             )
             .read()
@@ -112,7 +112,7 @@ fn test_up_run_passing() -> Result<()> {
             cmd!(
                 "defaults",
                 "read-type",
-                "co.fahn.up-rs.test-up_run_passing",
+                "co.fahn.up.test-up_run_passing",
                 "AppleKeyboardUIMode"
             )
             .read()
@@ -124,7 +124,7 @@ fn test_up_run_passing() -> Result<()> {
             cmd!(
                 "defaults",
                 "read-type",
-                "co.fahn.up-rs.test-up_run_passing",
+                "co.fahn.up.test-up_run_passing",
                 "CustomHeaders"
             )
             .read()
@@ -136,7 +136,7 @@ fn test_up_run_passing() -> Result<()> {
             cmd!(
                 "defaults",
                 "read-type",
-                "co.fahn.up-rs.test-up_run_passing",
+                "co.fahn.up.test-up_run_passing",
                 "AppleICUDateFormatStrings"
             )
             .read()

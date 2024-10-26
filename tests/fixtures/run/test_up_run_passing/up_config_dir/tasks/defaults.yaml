@@ -1,7 +1,7 @@
 run_lib: defaults
 
 data:
-  co.fahn.up-rs.test-up_run_passing:
+  co.fahn.up.test-up_run_passing:
 
     AppleKeyboardUIMode: 2
 

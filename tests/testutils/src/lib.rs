@@ -40,7 +40,7 @@ pub fn crate_binary_cmd(binary_name: &str, temp_dir: &Utf8Path) -> Result<Comman
         [
             "--log-level=trace",
             "--up-dir",
-            temp_dir.join("up-rs").as_str(),
+            temp_dir.join("up").as_str(),
             "--color=always",
         ]
         .iter(),

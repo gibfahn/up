@@ -225,8 +225,8 @@ fn test_uncreateable_backup_dir() -> Result<()> {
     let temp_dir = testutils::temp_dir("up", testutils::function_path!()).unwrap();
     fs::create_dir(temp_dir.join("dotfile_dir")).unwrap();
     fs::create_dir(temp_dir.join("home_dir")).unwrap();
-    fs::create_dir_all(temp_dir.join("up-rs/backup")).unwrap();
-    File::create(temp_dir.join("up-rs/backup/link")).unwrap();
+    fs::create_dir_all(temp_dir.join("up/backup")).unwrap();
+    File::create(temp_dir.join("up/backup/link")).unwrap();
     let assert = run_link_cmd(
         &temp_dir.join("dotfile_dir"),
         &temp_dir.join("home_dir"),
@@ -238,7 +238,7 @@ fn test_uncreateable_backup_dir() -> Result<()> {
         &[
             "Backup directory",
             "should exist and be a directory",
-            "uncreateable_backup_dir/up-rs/backup/link",
+            "uncreateable_backup_dir/up/backup/link",
         ],
     )?;
 
@@ -258,7 +258,7 @@ fn get_home_dotfile_dirs(
     Ok((
         temp_dir.join("home_dir").canonicalize_utf8().unwrap(),
         temp_dir.join("dotfile_dir").canonicalize_utf8().unwrap(),
-        temp_dir.join("up-rs/backup/link"),
+        temp_dir.join("up/backup/link"),
         temp_dir,
     ))
 }

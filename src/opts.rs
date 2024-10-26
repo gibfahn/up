@@ -16,15 +16,15 @@ use serde_derive::Serialize;
 pub(crate) const FALLBACK_CONFIG_PATH: &str = "dotfiles/.config/up/up.yaml";
 /// URL to use to find the latest version of up.
 pub(crate) const LATEST_RELEASE_URL: &str =
-    "https://api.github.com/repos/gibfahn/up-rs/releases/latest";
+    "https://api.github.com/repos/gibfahn/up/releases/latest";
 #[cfg(target_os = "linux")]
 /// URL to use to download the latest release of up for Linux.
 pub(crate) const SELF_UPDATE_URL: &str =
-    "https://github.com/gibfahn/up-rs/releases/latest/download/up-linux";
+    "https://github.com/gibfahn/up/releases/latest/download/up-linux";
 #[cfg(target_os = "macos")]
 /// URL to use to download the latest release of up for macOS.
 pub(crate) const SELF_UPDATE_URL: &str =
-    "https://github.com/gibfahn/up-rs/releases/latest/download/up-darwin";
+    "https://github.com/gibfahn/up/releases/latest/download/up-darwin";
 
 /// Builds the Args struct from CLI input and from environment variable input.
 #[must_use]
@@ -40,7 +40,7 @@ config directory. It handles linking configuration files into the right location
 scripts to make sure the tools you need are installed and up to date. It is designed to complete
 common bootstrapping tasks without dependencies, so you can bootstrap a new machine by:
 
-❯ curl --create-dirs -Lo ~/bin/up https://github.com/gibfahn/up-rs/releases/latest/download/up-$(uname) && chmod +x ~/bin/up
+❯ curl --create-dirs -Lo ~/bin/up https://github.com/gibfahn/up/releases/latest/download/up-$(uname) && chmod +x ~/bin/up
 
 ❯ ~/bin/up run --bootstrap --fallback-url https://github.com/gibfahn/dot
 
@@ -53,7 +53,7 @@ There are also a number of libraries built into up, that can be accessed directl
 up task configs, e.g. `up link` to link dotfiles.
 
 For debugging, run with `RUST_LIB_BACKTRACE=1` to show error/panic traces.
-Logs from the latest run are available at $TMPDIR/up-rs/logs/up-rs_latest.log by default.
+Logs from the latest run are available at $TMPDIR/up/logs/up_latest.log by default.
 */
 #[derive(Debug, Parser)]
 #[clap(version)]
@@ -63,7 +63,7 @@ pub struct Opts {
     #[clap(
         long,
         short = 'l',
-        default_value = "up=info,up_rs=info",
+        default_value = "up=info",
         env = "RUST_LOG",
         alias = "log-level"
     )]

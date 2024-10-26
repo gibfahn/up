@@ -1,10 +1,12 @@
-//! # up-rs
-//!
-//! up-rs is a tool to keep your machine up to date.
-//!
-//! It's aim is similar to tools like ansible, puppet, or chef, but instead of
-//! being useful for maintaining large CI fleets, it is designed for a developer
-//! to use to manage the machines they regularly use.
+/*!
+# up
+
+up is a tool to keep your machine up to date.
+
+Its aim is similar to tools like ansible, puppet, or chef, but instead of
+being useful for maintaining large CI fleets, it is designed for a developer
+to use to manage the machines they regularly use.
+*/
 
 // #![feature(external_doc)]
 // #![doc(include = "../README.md")]
@@ -40,10 +42,10 @@ use tracing_subscriber::fmt::format::DefaultFields;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::prelude::*;
 use tracing_subscriber::util::SubscriberInitExt;
-use up_rs::log;
-use up_rs::opts::Opts;
-use up_rs::utils::errors::log_error;
-use up_rs::utils::files;
+use up::log;
+use up::opts::Opts;
+use up::utils::errors::log_error;
+use up::utils::files;
 
 /// Env vars to avoid printing when we log the current environment.
 const IGNORED_ENV_VARS: [&str; 1] = [
@@ -57,7 +59,7 @@ fn main() -> Result<()> {
     // Get starting time.
     let now = Instant::now();
 
-    let mut opts = up_rs::opts::parse();
+    let mut opts = up::opts::parse();
 
     color_eyre::config::HookBuilder::new()
         // Avoids printing these lines when up fails:
@@ -92,7 +94,7 @@ fn main() -> Result<()> {
             .collect::<Vec<_>>()
     );
 
-    let mut result = up_rs::run(opts);
+    let mut result = up::run(opts);
 
     if let Some(log_path) = log_path {
         result = result.with_section(|| format!("{log_path}").header("Log file:"));
@@ -107,7 +109,7 @@ fn main() -> Result<()> {
     } else {
         Level::DEBUG
     };
-    log!(level, "Up-rs ran successfully in {now_elapsed:?}");
+    log!(level, "Up ran successfully in {now_elapsed:?}");
     trace!("Finished up.");
     Ok(())
 }

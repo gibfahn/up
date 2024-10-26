@@ -248,7 +248,7 @@ fn set_up_remote(repo: &Repository, remote_config: &GitRemote) -> Result<bool> {
             .fetch(
                 &fetch_refspecs,
                 Some(FetchOptions::new().remote_callbacks(remote_callbacks(&mut count))),
-                Some("up-rs automated fetch"),
+                Some("up automated fetch"),
             )
             .map_err(|e| {
                 let extra_info = if e.to_string()

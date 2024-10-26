@@ -29,9 +29,9 @@ struct GitHubReleaseJsonResponse {
     tag_name: String,
 }
 
-/// Name user agent after the app, e.g. up-rs/1.2.3.
+/// Name user agent after the app, e.g. up/1.2.3.
 const APP_USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"),);
-/// Current version of up-rs we're building.
+/// Current version of up we're building.
 const CURRENT_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 impl ResolveEnv for UpdateSelfOptions {}
@@ -44,7 +44,7 @@ pub(crate) fn run(opts: &UpdateSelfOptions) -> Result<TaskStatus> {
     // If the current binary's location is where it was originally compiled, assume it is a dev
     // build, and thus skip the update.
     if !opts.always_update && up_path.starts_with(env!("CARGO_MANIFEST_DIR")) {
-        debug!("Skipping up-rs update, current version '{up_path}' is a dev build.",);
+        debug!("Skipping up update, current version '{up_path}' is a dev build.",);
         return Ok(TaskStatus::Skipped);
     }
 
@@ -65,16 +65,16 @@ pub(crate) fn run(opts: &UpdateSelfOptions) -> Result<TaskStatus> {
             <= semver::Version::parse(CURRENT_VERSION)?
         {
             debug!(
-                "Skipping up-rs update, current version '{CURRENT_VERSION}' is not older than \
-                 latest GitHub version '{latest_github_release}'",
+                "Skipping up update, current version '{CURRENT_VERSION}' is not older than latest \
+                 GitHub version '{latest_github_release}'",
             );
             return Ok(TaskStatus::Skipped);
         }
-        trace!("Updating up-rs from '{CURRENT_VERSION}' to '{latest_github_release}'",);
+        trace!("Updating up from '{CURRENT_VERSION}' to '{latest_github_release}'",);
     }
 
     let temp_dir = Utf8PathBuf::try_from(env::temp_dir())?;
-    let temp_path = &temp_dir.join(format!("up_rs-{}", Utc::now().to_rfc3339()));
+    let temp_path = &temp_dir.join(format!("up-{}", Utc::now().to_rfc3339()));
 
     trace!("Downloading url {url} to path {up_path}", url = &opts.url,);
 
@@ -95,7 +95,7 @@ pub(crate) fn run(opts: &UpdateSelfOptions) -> Result<TaskStatus> {
     let new_version = cmd!(temp_path.as_str(), "--version").read()?;
     let new_version = new_version.trim_start_matches(concat!(env!("CARGO_PKG_NAME"), " "));
     if semver::Version::parse(new_version)? > semver::Version::parse(CURRENT_VERSION)? {
-        info!("Updating up-rs from '{CURRENT_VERSION}' to '{new_version}'",);
+        info!("Updating up from '{CURRENT_VERSION}' to '{new_version}'",);
         fs::rename(temp_path, &up_path).wrap_err_with(|| E::Rename {
             from: temp_path.clone(),
             to: up_path.clone(),
@@ -103,7 +103,7 @@ pub(crate) fn run(opts: &UpdateSelfOptions) -> Result<TaskStatus> {
         Ok(TaskStatus::Passed)
     } else {
         debug!(
-            "Skipping up-rs update, current version '{CURRENT_VERSION}' and new version \
+            "Skipping up update, current version '{CURRENT_VERSION}' and new version \
              '{new_version}'",
         );
         Ok(TaskStatus::Skipped)

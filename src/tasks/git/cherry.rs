@@ -131,9 +131,7 @@ fn sha256_digest<R: Read>(mut reader: R) -> Result<Digest> {
             break;
         }
         context.update(buffer.get(..count).ok_or_else(|| {
-            eyre!(
-                "Logic error in up-rs, we should have just confirmed that the buffer wasn't empty."
-            )
+            eyre!("Logic error in up, we should have just confirmed that the buffer wasn't empty.")
         })?);
     }
 

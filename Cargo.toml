@@ -4,7 +4,7 @@
 [workspace.package]
 license = "MIT OR Apache-2.0"
 edition = "2021"
-repository = "https://github.com/gibfahn/up-rs"
+repository = "https://github.com/gibfahn/up"
 keywords = ["cli", "tool"]
 categories = ["command-line-utilities", "config"]
 readme = "README.md"
@@ -13,9 +13,9 @@ authors = ["Gibson Fahnestock <gibfahn@gmail.com>"]
 [workspace.lints.rust]
 unsafe_code = "forbid"
 
-# up-rs is the root package in this workspace.
+# up is the root package in this workspace.
 [package]
-name = "up-rs"
+name = "up"
 version = "0.16.0"
 authors.workspace = true
 categories.workspace = true
@@ -26,10 +26,10 @@ readme.workspace = true
 repository.workspace = true
 
 description = """
-up-rs is a tool to help you keep your machine up to date.
+up is a tool to help you keep your machine up to date.
 """
-documentation = "https://github.com/gibfahn/up-rs"
-homepage = "https://github.com/gibfahn/up-rs"
+documentation = "https://docs.rs/crate/up"
+homepage = "https://github.com/gibfahn/up"
 exclude = ["tests/"]
 
 [[bin]]
