@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.0](https://github.com/gibfahn/up/releases/tag/0.17.0) (2024-10-27)
+
+### Bug Fixes
+- help: improve some docstrings, add colored help ([d38c0ec](https://github.com/gibfahn/up/commit/d38c0ecda150872ed0a41297e1d24c231b165d46))
+- tasks: don't use colons in temp directory ([79b52bd](https://github.com/gibfahn/up/commit/79b52bd1009214de251326f8a1eb4fbcad53a733))
+- user: debug log the user's tty ([7a7509f](https://github.com/gibfahn/up/commit/7a7509f3a4ddaa40f1e037b81a75a83965793651))
+- user: don't debug log tty even when info logging enabled ([87e6ed6](https://github.com/gibfahn/up/commit/87e6ed68da94839fd0ce1e3cc96e21958f5f6250))
+
+### Documentation
+- readme: add info about homebrew tap ([b68997f](https://github.com/gibfahn/up/commit/b68997f0468dc07dc5cc8af4a57fdf248eb438ba))
+- user: add note about `sudo -k true` usage ([dfc4cd4](https://github.com/gibfahn/up/commit/dfc4cd4ad2a33e2eccbfd92c2f9427f74c2d0947))
+
+### Features
+- [**BREAKING**] docs: add manpage and markdown doc generation ([e61dd9b](https://github.com/gibfahn/up/commit/e61dd9b5a52849b3eea7a8e0a5ba1662368bfdb6))
+
 ## [0.16.0](https://github.com/gibfahn/up-rs/releases/tag/0.16.0) (2024-08-05)
 
 ### Bug Fixes
