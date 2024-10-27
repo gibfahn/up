@@ -24,12 +24,10 @@ Or if you have Cargo on your system you can also build it from source:
 cargo install up
 ```
 
-## Subcommands
+Or if you use homebrew you can install it via:
 
-### Link
-
-```console
-$ up link --from ~/code/dotfiles --to ~
+```shell
+brew install gibfahn/tap/up
 ```
 
 symlinks the files in `dotfiles` into the matching directory in `~` (so `~/.config/git/config` becomes a link to

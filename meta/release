@@ -42,6 +42,7 @@ main() {
   # Install nextest runner if missing: https://nexte.st
   (( $+commands[cargo-nextest] )) ||  brew install cargo-nextest
   (( $+commands[git-cliff] )) || brew install git-cliff
+  (( $+commands[gh] )) || brew install gh
 
   # Delete stale files.
   log_section "Cleaning up files from last release..."
