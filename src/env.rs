@@ -7,6 +7,12 @@ This takes in the environment of the running process, adds built-in environment 
 
 These env vars are automatically resolved, and will override the same env var set by the user.
 
+### `UP_EXIT_CODE_SKIPPED`
+
+The `UP_EXIT_CODE_SKIPPED` maps to the exit code that will cause the task to be treated as skipped.
+
+This is currently exit code 204 (HTTP 204 means "No Content").
+
 ### `UP_HARDWARE_UUID`
 
 (macOS only)
@@ -29,6 +35,10 @@ use tracing::trace;
 /// Environment variable name that is automatically provided for users to refer to, particularly in
 /// the defaults `run_lib` or subcommand.
 pub const UP_HARDWARE_UUID: &str = "UP_HARDWARE_UUID";
+
+/// Environment variable name automatically provided for users so they can mark tasks as skipped.
+pub const UP_EXIT_CODE_SKIPPED_ENV_NAME: &str = "UP_EXIT_CODE_SKIPPED";
+pub const UP_EXIT_CODE_SKIPPED: u32 = 204;
 
 // TODO(gib): add tests for cyclical config values etc.
 /// Build a set of environment variables from the up config settings and the current command's
@@ -138,6 +148,10 @@ pub fn get_env(
 
 /// Add environment variables that up generates automatically to the resolved environment.
 fn add_builtin_env_vars(env: &mut HashMap<String, String>) -> Result<()> {
+    env.insert(
+        UP_EXIT_CODE_SKIPPED_ENV_NAME.to_owned(),
+        UP_EXIT_CODE_SKIPPED.to_string(),
+    );
     env.insert(
         UP_HARDWARE_UUID.to_owned(),
         if cfg!(target_os = "macos") {

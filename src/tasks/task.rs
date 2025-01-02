@@ -85,7 +85,7 @@ pub struct TaskConfig {
     /**
     Run if command: only run the `run_cmd` if this command passes (returns exit code 0).
 
-    The task will be skipped if exit code 204 is returned (HTTP 204 means "No Content").
+    The task will be skipped if the exit code from `$UP_EXIT_CODE_SKIPPED` is returned.
     Any other exit code means the command failed to run.
     */
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -93,7 +93,7 @@ pub struct TaskConfig {
     /**
     Run command: command to run to perform the update.
 
-    The task will be marked as skipped if exit code 204 is returned (HTTP 204 means "No Content").
+    The task will be marked as skipped if the exit code from `$UP_EXIT_CODE_SKIPPED` is returned.
     Any other exit code means the command failed to run.
     */
     #[serde(skip_serializing_if = "Option::is_none")]
