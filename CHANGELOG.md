@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.1](https://github.com/gibfahn/up/releases/tag/0.17.1) (2025-01-02)
+
+### Bug Fixes
+- task: provide env var for $UP_EXIT_CODE_SKIPPED ([1b97434](https://github.com/gibfahn/up/commit/1b97434c64291ca227199a975bc773c9fbfd401c))
+
 ## [0.17.0](https://github.com/gibfahn/up/releases/tag/0.17.0) (2024-10-27)
 
 ### Bug Fixes

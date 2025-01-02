@@ -1,66 +1,63 @@
 stable: Pulling from clux/muslrust
 4be1db8bbbeb: Pulling fs layer
-2e9e8a3bc29c: Pulling fs layer
-355d7d8d87a0: Pulling fs layer
-ed803f73ddb8: Pulling fs layer
-83cdafe8d7e5: Pulling fs layer
-5552b41723c1: Pulling fs layer
-7c6f7451b282: Pulling fs layer
-3d804e84a1f6: Pulling fs layer
-d77ceb342b3f: Pulling fs layer
-83cdafe8d7e5: Waiting
-e456c79d259e: Pulling fs layer
-ed803f73ddb8: Waiting
-3d804e84a1f6: Waiting
-5552b41723c1: Waiting
-d77ceb342b3f: Waiting
-ea9b961cc1b6: Pulling fs layer
-150c90b7a2af: Pulling fs layer
-10bf0ab8c4ba: Pulling fs layer
-e456c79d259e: Waiting
-7c6f7451b282: Waiting
-150c90b7a2af: Waiting
-ea9b961cc1b6: Waiting
-10bf0ab8c4ba: Waiting
+cfaa55eda8f7: Pulling fs layer
+442a5f1d1d46: Pulling fs layer
+4c6c7026fc5b: Pulling fs layer
+b5c939e59651: Pulling fs layer
+0a07509a0746: Pulling fs layer
+b6e1db31a9c4: Pulling fs layer
+dedd2c7d8471: Pulling fs layer
+1647917aac9e: Pulling fs layer
+032acbb171e9: Pulling fs layer
+d4d376ebf551: Pulling fs layer
+383dd67a1d80: Pulling fs layer
+aca21b397f39: Pulling fs layer
+4c6c7026fc5b: Waiting
+b5c939e59651: Waiting
+0a07509a0746: Waiting
+b6e1db31a9c4: Waiting
+dedd2c7d8471: Waiting
+1647917aac9e: Waiting
+032acbb171e9: Waiting
+aca21b397f39: Waiting
+d4d376ebf551: Waiting
+383dd67a1d80: Waiting
 4be1db8bbbeb: Verifying Checksum
 4be1db8bbbeb: Download complete
-ed803f73ddb8: Verifying Checksum
-ed803f73ddb8: Download complete
 4be1db8bbbeb: Pull complete
-83cdafe8d7e5: Verifying Checksum
-83cdafe8d7e5: Download complete
-5552b41723c1: Verifying Checksum
-5552b41723c1: Download complete
-7c6f7451b282: Download complete
-3d804e84a1f6: Verifying Checksum
-3d804e84a1f6: Download complete
-d77ceb342b3f: Verifying Checksum
-d77ceb342b3f: Download complete
-2e9e8a3bc29c: Verifying Checksum
-2e9e8a3bc29c: Download complete
-e456c79d259e: Verifying Checksum
-e456c79d259e: Download complete
-150c90b7a2af: Verifying Checksum
-150c90b7a2af: Download complete
-ea9b961cc1b6: Verifying Checksum
-ea9b961cc1b6: Download complete
-10bf0ab8c4ba: Verifying Checksum
-10bf0ab8c4ba: Download complete
-2e9e8a3bc29c: Pull complete
-355d7d8d87a0: Verifying Checksum
-355d7d8d87a0: Download complete
-355d7d8d87a0: Pull complete
-ed803f73ddb8: Pull complete
-83cdafe8d7e5: Pull complete
-5552b41723c1: Pull complete
-7c6f7451b282: Pull complete
-3d804e84a1f6: Pull complete
-d77ceb342b3f: Pull complete
-e456c79d259e: Pull complete
-ea9b961cc1b6: Pull complete
-150c90b7a2af: Pull complete
-10bf0ab8c4ba: Pull complete
-Digest: sha256:2db6672beff66b7c64681ac89b5389c34f3eef49b164f689850f2aca4ef0136b
+4c6c7026fc5b: Verifying Checksum
+4c6c7026fc5b: Download complete
+b5c939e59651: Verifying Checksum
+b5c939e59651: Download complete
+0a07509a0746: Verifying Checksum
+0a07509a0746: Download complete
+cfaa55eda8f7: Download complete
+b6e1db31a9c4: Download complete
+dedd2c7d8471: Verifying Checksum
+dedd2c7d8471: Download complete
+1647917aac9e: Download complete
+032acbb171e9: Download complete
+383dd67a1d80: Verifying Checksum
+383dd67a1d80: Download complete
+cfaa55eda8f7: Pull complete
+aca21b397f39: Verifying Checksum
+aca21b397f39: Download complete
+d4d376ebf551: Verifying Checksum
+d4d376ebf551: Download complete
+442a5f1d1d46: Verifying Checksum
+442a5f1d1d46: Download complete
+442a5f1d1d46: Pull complete
+4c6c7026fc5b: Pull complete
+b5c939e59651: Pull complete
+0a07509a0746: Pull complete
+b6e1db31a9c4: Pull complete
+dedd2c7d8471: Pull complete
+1647917aac9e: Pull complete
+032acbb171e9: Pull complete
+d4d376ebf551: Pull complete
+383dd67a1d80: Pull complete
+aca21b397f39: Pull complete
+Digest: sha256:ad8f5707da474b774dc41b9073e0380918707d7408ad00b2261f3bd397d076d7
 Status: Downloaded newer image for clux/muslrust:stable
 docker.io/clux/muslrust:stable
 # Command-Line Help for `up`
