@@ -38,14 +38,14 @@ path = "src/main.rs"
 
 [dependencies]
 camino = { version = "1.1.9", features = ["serde1"] }
-chrono = "0.4.38"
-clap = { version = "4.5.20", features = [
+chrono = "0.4.39"
+clap = { version = "4.5.23", features = [
   "derive",
   "env",
   "string",
   "wrap_help",
 ] }
-clap_complete = "4.5.35"
+clap_complete = "4.5.40"
 color-eyre = "0.6.3"
 dirs = "5.0.1"
 displaydoc = "0.2.5"
@@ -56,40 +56,40 @@ git2 = { version = "0.19.0", features = [
   "vendored-libgit2",
 ] }
 hex = "0.4.3"
-itertools = "0.13.0"
-indicatif = { version = "0.17.8", features = ["rayon"] }
+itertools = "0.14.0"
+indicatif = { version = "0.17.9", features = ["rayon"] }
 log = "0.4.22"
 plist = "1.7.0"
 rayon = "1.10.0"
-reqwest = { version = "0.12.8", features = ["blocking", "json"] }
+reqwest = { version = "0.12.12", features = ["blocking", "json"] }
 ring = "0.17.8"
 schemars = "0.8.21"
-semver = "1.0.23"
-serde = "1.0.213"
-serde_derive = "1.0.213"
-serde_json = "1.0.132"
+semver = "1.0.24"
+serde = "1.0.217"
+serde_derive = "1.0.217"
+serde_json = "1.0.134"
 serde_yaml = "0.9.34"
 shell-escape = "0.1.5"
 shellexpand = "3.1.0"
-thiserror = "1.0.65"
+thiserror = "2.0.9"
 toml = "0.8.19"
-tracing = "0.1.40"
-tracing-error = "0.2.0"
-tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
-url = "2.5.2"
+tracing = "0.1.41"
+tracing-error = "0.2.1"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+url = "2.5.4"
 uzers = "0.12.1"
 walkdir = "2.5.0"
-tracing-indicatif = "0.3.6"
+tracing-indicatif = "0.3.8"
 clap-markdown = "0.1.4"
 clap_mangen = "0.2.24"
 pretty_assertions = "1.4.1"
 
 [dev-dependencies]
 assert_cmd = "2.0.16"
-glob = "0.3.1"
+glob = "0.3.2"
 ignore = "0.4.23"
-predicates = "3.1.2"
-serial_test = "3.1.1"
+predicates = "3.1.3"
+serial_test = "3.2.0"
 test-log = { version = "0.2.16", default-features = false, features = [
   "trace",
 ] }

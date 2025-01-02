@@ -1,9 +1,14 @@
 # Requires nightly Rust/Clippy.
 
+# Allow-list for `clippy::multiple-crate-versions`.
 # https://rust-lang.github.io/rust-clippy/master/index.html#multiple_crate_versions
+# Check duplicates with `cargo +nightly tree --workspace --target all --duplicates`
 allowed-duplicate-crates = [
   "regex-automata",
   "regex-syntax",
+  "thiserror",
+  "thiserror-impl",
+  "unicode-width",
   "windows-sys",
   "windows-targets",
   "windows_aarch64_gnullvm",

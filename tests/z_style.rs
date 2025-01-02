@@ -148,8 +148,7 @@ fn test_no_todo() -> Result<()> {
         // Only scan files, not dirs or symlinks.
         if file
             .file_type()
-            // Don't match todos in this file.
-            .map_or(true, |file_type| !file_type.is_file())
+            .is_none_or(|file_type| !file_type.is_file())
             || file.path().ends_with(file!())
         {
             continue;
