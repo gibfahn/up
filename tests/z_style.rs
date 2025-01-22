@@ -20,8 +20,7 @@ fn test_rustdoc_public() -> Result<()> {
 
     ensure!(
         check_output.status.success(),
-        "Public documentation building failed. Run `RUSTDOCFLAGS=--deny=warnings cargo doc \
-         --no-deps --keep-going` and fix any errors."
+        "Private documentation building failed. Please run the above command and fix any issues."
     );
     Ok(())
 }
@@ -34,8 +33,7 @@ fn test_rustdoc_private() -> Result<()> {
 
     ensure!(
         check_output.status.success(),
-        "Private documentation building failed. Run `RUSTDOCFLAGS=--deny=warnings cargo doc \
-         --no-deps --keep-going --document-private-items` and fix any errors."
+        "Private documentation building failed. Please run the above command and fix any issues."
     );
     Ok(())
 }
@@ -58,7 +56,7 @@ fn test_rustfmt() -> Result<()> {
 
     ensure!(
         check_output.status.success(),
-        "Rustfmt needs to be run, ran 'cargo fmt' to fix, please commit the changes."
+        "Rustfmt needs to be run, we ran 'cargo fmt' to fix, please commit the changes."
     );
     Ok(())
 }
@@ -81,7 +79,7 @@ fn test_testutils_rustfmt() -> Result<()> {
 
     ensure!(
         check_output.status.success(),
-        "Rustfmt needs to be run, ran 'cargo fmt' to fix, please commit the changes."
+        "Rustfmt needs to be run. We ran 'cargo fmt' to fix, please commit the changes."
     );
     Ok(())
 }
@@ -104,8 +102,7 @@ fn test_clippy() -> Result<()> {
 
     ensure!(
         clippy_output.status.success(),
-        "Clippy needs to be run, please run 'cargo clippy -- --deny=clippy::pedantic \
-         --allow=unknown_lints'."
+        "Clippy needs to be run. Please run the above command and fix any issues."
     );
     Ok(())
 }
@@ -128,7 +125,7 @@ fn test_testutils_clippy() -> Result<()> {
 
     ensure!(
         clippy_output.status.success(),
-        "Clippy needs to be run, please run 'cargo clippy'."
+        "Clippy needs to be run. Please run the above command and fix any issues."
     );
     Ok(())
 }
@@ -205,6 +202,23 @@ enum CargoCmdType {
 
 fn cargo_cmd(current_dir: &Utf8Path, fmt: CargoCmdType) -> Result<Output> {
     let mut cmd = Command::new("cargo");
+
+    match fmt {
+        // Use stable cargo.
+        CargoCmdType::RustdocCheckPublic
+        | CargoCmdType::RustdocCheckPrivate
+        | CargoCmdType::RustfmtStableCheck
+        | CargoCmdType::ClippyStableCheck => {}
+        // Use nightly cargo.
+        CargoCmdType::RustfmtCheck
+        | CargoCmdType::RustfmtFix
+        | CargoCmdType::ClippyCheck
+        | CargoCmdType::ClippyFix => {
+            cmd.arg("+nightly");
+            // Nightly cargo shouldn't be run with stable cargo.
+            cmd.env_remove("CARGO");
+        }
+    }
     cmd.args(match fmt {
         CargoCmdType::RustdocCheckPublic => {
             ["doc", "--no-deps", "--keep-going", "--color=always"].iter()
@@ -218,8 +232,8 @@ fn cargo_cmd(current_dir: &Utf8Path, fmt: CargoCmdType) -> Result<Output> {
         ]
         .iter(),
         CargoCmdType::RustfmtStableCheck => ["fmt", "--", "--check", "--color=always"].iter(),
-        CargoCmdType::RustfmtCheck => ["+nightly", "fmt", "--", "--check", "--color=always"].iter(),
-        CargoCmdType::RustfmtFix => ["+nightly", "fmt", "--", "--color=always"].iter(),
+        CargoCmdType::RustfmtCheck => ["fmt", "--", "--check", "--color=always"].iter(),
+        CargoCmdType::RustfmtFix => ["fmt", "--", "--color=always"].iter(),
         CargoCmdType::ClippyStableCheck => [
             "clippy",
             #[cfg(not(debug_assertions))]
@@ -231,28 +245,25 @@ fn cargo_cmd(current_dir: &Utf8Path, fmt: CargoCmdType) -> Result<Output> {
         ]
         .iter(),
         CargoCmdType::ClippyCheck => [
-            "+nightly",
             "clippy",
             #[cfg(not(debug_assertions))]
             "--release",
             "--color=always",
             "--",
             "--deny=warnings",
-            "--allow=unknown_lints",
         ]
         .iter(),
         CargoCmdType::ClippyFix => [
-            "+nightly",
             "clippy",
             #[cfg(not(debug_assertions))]
             "--release",
             "--color=always",
             "--fix",
             "--allow-staged",
-            "--allow=unknown_lints",
         ]
         .iter(),
     });
+
     // Only used by `cargo doc`, but should be fine to have set everywhere.
     cmd.env("RUSTDOCFLAGS", "--deny=warnings");
     cmd.current_dir(current_dir);
