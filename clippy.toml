@@ -4,6 +4,9 @@
 # https://rust-lang.github.io/rust-clippy/master/index.html#multiple_crate_versions
 # Check duplicates with `cargo +nightly tree --workspace --target all --duplicates`
 allowed-duplicate-crates = [
+  "dirs",
+  "dirs-sys",
+  "redox_users",
   "regex-automata",
   "regex-syntax",
   "thiserror",
