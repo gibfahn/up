@@ -2,7 +2,6 @@
 #![cfg(target_os = "macos")]
 
 use color_eyre::Result;
-use duct::cmd;
 use duct::Expression;
 use predicates::prelude::*;
 use test_log::test;
@@ -10,6 +9,9 @@ use testutils::ensure_eq;
 use testutils::AssertCmdExt;
 use tracing::debug;
 use tracing::info;
+use tracing::trace;
+use up::cmd;
+use up::exec::cmd;
 use up::exec::UpDuct;
 
 /**
@@ -312,10 +314,11 @@ fn test_defaults_write_local() -> Result<()> {
 
         info!("Testing default {name}: {test_case:#?}");
 
-        {
-            debug!("Writing original value for {name}");
+        let defaults_key = format!("defaults_write_local_{name}");
 
-            let defaults_key = format!("defaults_write_local_{name}");
+        {
+            debug!("Writing original value for {name}: {orig_defaults_set_value}");
+
             let mut args = vec!["write", &domain, &defaults_key];
 
             let defaults_type_arg;
@@ -335,14 +338,12 @@ fn test_defaults_write_local() -> Result<()> {
         }
 
         {
-            debug!("Checking we agree with `defaults` about the original value.");
+            debug!(
+                "Checking we agree with `defaults` about the original value: {orig_up_check_value}"
+            );
             let mut cmd = testutils::crate_binary_cmd("up", &temp_dir)?;
-            cmd.args([
-                "defaults",
-                "read",
-                &domain,
-                &format!("defaults_write_local_{name}"),
-            ]);
+            cmd.args(["defaults", "read", &domain, &defaults_key]);
+            trace!("Running: {cmd:?}");
             cmd.assert()
                 .eprint_stdout_stderr()
                 .try_success()?
@@ -353,7 +354,6 @@ fn test_defaults_write_local() -> Result<()> {
             debug!("Setting the key to the new value ourselves:");
             let mut cmd = testutils::crate_binary_cmd("up", &temp_dir)?;
 
-            let defaults_key = format!("defaults_write_local_{name}");
             cmd.args(["defaults", "write", &domain, &defaults_key, up_set_value]);
             cmd.assert()
                 .eprint_stdout_stderr()
@@ -365,14 +365,9 @@ fn test_defaults_write_local() -> Result<()> {
 
         {
             debug!("Checking that defaults agrees with the new value:");
-            let new_default = cmd!(
-                "defaults",
-                "read",
-                &domain,
-                &format!("defaults_write_local_{name}")
-            )
-            .read()
-            .unwrap();
+            let new_default = cmd!("defaults", "read", &domain, &defaults_key)
+                .read()
+                .unwrap();
             ensure_eq!(*defaults_check_value, new_default);
         }
     }
