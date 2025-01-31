@@ -45,7 +45,7 @@ clap = { version = "4.5.27", features = [
   "string",
   "wrap_help",
 ] }
-clap_complete = "4.5.42"
+clap_complete = "4.5.44"
 color-eyre = "0.6.3"
 dirs = "6.0.0"
 displaydoc = "0.2.5"
@@ -57,7 +57,7 @@ git2 = { version = "0.20.0", features = [
 ] }
 hex = "0.4.3"
 itertools = "0.14.0"
-indicatif = { version = "0.17.9", features = ["rayon"] }
+indicatif = { version = "0.17.11", features = ["rayon"] }
 log = "0.4.25"
 plist = "1.7.0"
 rayon = "1.10.0"
@@ -67,7 +67,7 @@ schemars = "0.8.21"
 semver = "1.0.25"
 serde = "1.0.217"
 serde_derive = "1.0.217"
-serde_json = "1.0.137"
+serde_json = "1.0.138"
 serde_yaml = "0.9.34"
 shell-escape = "0.1.5"
 shellexpand = "3.1.0"
