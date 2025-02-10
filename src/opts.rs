@@ -13,6 +13,7 @@ use clap::ValueHint;
 use clap_complete::Shell;
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
+use std::ffi::OsString;
 
 /// The default fallback path inside a fallback repo to look for the up.yaml file in.
 pub(crate) const FALLBACK_CONFIG_PATH: &str = "dotfiles/.config/up/up.yaml";
@@ -147,6 +148,10 @@ pub(crate) enum SubCommand {
 
     /// List available tasks.
     List(RunOptions),
+    /**
+    Runs a command in a fake tty.
+    */
+    Faketty(FakettyOptions),
 }
 
 /// Options passed to `up run`.
@@ -254,7 +259,7 @@ pub(crate) struct SchemaOptions {
     pub(crate) path: Option<Utf8PathBuf>,
 }
 
-/// Arguments for the `liv generate manpages` subcommand.
+/// Arguments for the `up generate manpages` subcommand.
 #[derive(Debug, Clone, Parser)]
 pub struct ManpagesOptions {
     /// Directory into which to write the generated manpages.
@@ -305,13 +310,13 @@ pub(crate) enum DocSubcommand {
     */
     Schema(SchemaOptions),
     /**
-    Generate man pages for liv and its subcommands.
+    Generate man pages for up and its subcommands.
 
     Manpages are generated into the output directory specified by `--output-dir`.
 
     EXAMPLES:
 
-    ❯ liv generate manpages --output-dir /usr/local/share/man/man1/
+    ❯ up generate manpages --output-dir /usr/local/share/man/man1/
     */
     #[clap(visible_alias = "man")]
     Manpages(ManpagesOptions),
@@ -437,4 +442,16 @@ pub struct DefaultsWriteOptions {
     Similarly if the dict contained `{"a": 1, "foo": 2, "b": 3, "bar": 4, "c": 5}`, and you write `{"foo": 6 "...":"...", "bar": 7, "baz": 8}`, you would end up with `{"a": 1, "foo": 6, "b": 3, "bar": 4, "c": 5, "baz": 8}`
     */
     pub(crate) value: Option<String>,
+}
+
+/// Options supported by the `up faketty` subcommand.
+#[derive(Debug, Parser, Default, Clone)]
+pub struct FakettyOptions {
+    /// The program to run.
+    #[clap(
+        num_args(1..),
+        value_parser(clap::builder::OsStringValueParser::new()),
+        trailing_var_arg(true),
+    )]
+    pub(crate) program: Vec<OsString>,
 }

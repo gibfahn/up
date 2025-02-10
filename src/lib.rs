@@ -71,6 +71,7 @@ mod docs;
 pub mod env;
 pub mod errors;
 pub mod exec;
+mod faketty;
 mod generate;
 pub mod opts;
 pub mod tasks;
@@ -137,6 +138,9 @@ pub fn run(opts: Opts) -> Result<()> {
         Some(SubCommand::Run(ref _cmd_opts)) => {
             let config = UpConfig::from(opts)?;
             tasks::run(&config, TasksDir::Tasks, TasksAction::Run)?;
+        }
+        Some(SubCommand::Faketty(cmd_opts)) => {
+            faketty::run(cmd_opts)?;
         }
         None => {
             let config = UpConfig::from(opts)?;
