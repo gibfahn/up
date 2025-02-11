@@ -102,7 +102,7 @@ impl UpConfig {
                     debug!("Yaml file was empty, using default config.");
                 } else {
                     config_yaml = serde_yaml::from_str::<ConfigYaml>(&config_str)?;
-                };
+                }
                 debug!("Config_yaml: {config_yaml:?}");
             }
             Some(up_yaml_path)

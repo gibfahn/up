@@ -40,7 +40,7 @@ pub(super) fn checkout_branch(
             branch.set_upstream(Some(&branch_target))?;
         }
         Err(e) => return Err(e.into()),
-    };
+    }
     match repo.head() {
         Ok(current_head) => {
             // A branch is currently checked out.

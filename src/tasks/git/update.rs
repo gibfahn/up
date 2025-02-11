@@ -208,7 +208,7 @@ pub(crate) fn real_update(git_config: &GitConfig) -> Result<bool> {
                 return Err(e.into());
             }
         }
-    };
+    }
     drop(default_remote); // Can't mutably use repo while this value is around.
     if !newly_created_repo {
         warn_for_unpushed_changes(&mut repo, &user_git_config)?;
@@ -306,7 +306,7 @@ fn set_up_remote(repo: &Repository, remote_config: &GitRemote) -> Result<bool> {
     );
     if set_remote_head(repo, &remote, &default_branch)? {
         did_work = true;
-    };
+    }
     Ok(did_work)
 }
 
