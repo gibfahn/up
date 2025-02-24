@@ -4,9 +4,9 @@ use crate::tasks::git::branch::get_push_branch;
 use crate::tasks::git::cherry::unmerged_commits;
 use crate::tasks::git::errors::GitError as E;
 use crate::utils::files::to_utf8_path;
+use color_eyre::eyre::Result;
 use color_eyre::eyre::ensure;
 use color_eyre::eyre::eyre;
-use color_eyre::eyre::Result;
 use git2::BranchType;
 use git2::Config;
 use git2::ErrorCode;
@@ -218,16 +218,20 @@ fn status_short(repo: &Repository, statuses: &git2::Statuses) -> Result<String> 
         let b = to_utf8_path(b.ok_or_else(|| eyre!("Couldn't work out diff status b"))?)?;
         let c = to_utf8_path(c.ok_or_else(|| eyre!("Couldn't work out diff status c"))?)?;
 
-        output += &match (index_status, worktree_status) {
-            ('R', 'R') => format!("RR {a} {b} {c}{extra}\n"),
-            ('R', worktree_status) => format!("R{worktree_status} {a} {b}{extra}\n"),
-            (index_status, 'R') => {
-                format!("{index_status}R {a} {c}{extra}\n")
+        write!(
+            output,
+            "{}",
+            &match (index_status, worktree_status) {
+                ('R', 'R') => format!("RR {a} {b} {c}{extra}\n"),
+                ('R', worktree_status) => format!("R{worktree_status} {a} {b}{extra}\n"),
+                (index_status, 'R') => {
+                    format!("{index_status}R {a} {c}{extra}\n")
+                }
+                (index_status, worktree_status) => {
+                    format!("{index_status}{worktree_status} {a}{extra}\n")
+                }
             }
-            (index_status, worktree_status) => {
-                format!("{index_status}{worktree_status} {a}{extra}\n")
-            }
-        }
+        )?;
     }
 
     for entry in statuses

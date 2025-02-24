@@ -4,10 +4,10 @@
 
 use camino::Utf8Path;
 use camino::Utf8PathBuf;
+use color_eyre::Result;
+use color_eyre::eyre::Context;
 use color_eyre::eyre::ensure;
 use color_eyre::eyre::eyre;
-use color_eyre::eyre::Context;
-use color_eyre::Result;
 use std::env;
 use std::fs;
 use std::process::Command;

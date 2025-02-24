@@ -1,18 +1,18 @@
 //! The link library task.
 use crate::opts::LinkOptions;
-use crate::tasks::task::TaskStatus;
 use crate::tasks::ResolveEnv;
 use crate::tasks::TaskError;
+use crate::tasks::task::TaskStatus;
 use crate::utils::files;
 use camino::Utf8Path;
 use camino::Utf8PathBuf;
 use chrono::DateTime;
 use chrono::Utc;
+use color_eyre::eyre::Context;
+use color_eyre::eyre::Result;
 use color_eyre::eyre::bail;
 use color_eyre::eyre::ensure;
 use color_eyre::eyre::eyre;
-use color_eyre::eyre::Context;
-use color_eyre::eyre::Result;
 use displaydoc::Display;
 use std::fs;
 use std::io;

@@ -1,6 +1,8 @@
 //! Update a git repo.
 // TODO(gib): Use https://lib.rs/crates/indicatif for progress bars and remove this.
 #![allow(clippy::print_stdout, clippy::unwrap_used)]
+use crate::tasks::git::GitConfig;
+use crate::tasks::git::GitRemote;
 use crate::tasks::git::branch::calculate_head;
 use crate::tasks::git::branch::get_branch_name;
 use crate::tasks::git::branch::get_push_branch;
@@ -13,12 +15,10 @@ use crate::tasks::git::fetch::set_remote_head;
 use crate::tasks::git::merge::do_ff_merge;
 use crate::tasks::git::prune::prune_merged_branches;
 use crate::tasks::git::status::warn_for_unpushed_changes;
-use crate::tasks::git::GitConfig;
-use crate::tasks::git::GitRemote;
 use crate::tasks::task::TaskStatus;
-use color_eyre::eyre::bail;
 use color_eyre::eyre::Context;
 use color_eyre::eyre::Result;
+use color_eyre::eyre::bail;
 use git2::BranchType;
 use git2::ConfigLevel;
 use git2::ErrorCode;

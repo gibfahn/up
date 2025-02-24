@@ -1,8 +1,8 @@
 //! macOS specific functions.
 
 use crate::cmd_debug;
-use color_eyre::eyre::eyre;
 use color_eyre::Result;
+use color_eyre::eyre::eyre;
 use serde::Deserialize;
 use serde::Serialize;
 

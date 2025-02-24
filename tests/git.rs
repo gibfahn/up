@@ -1,9 +1,9 @@
 use assert_cmd::Command;
 use camino::Utf8Path;
 use color_eyre::Result;
+use testutils::AssertCmdExt;
 use testutils::ensure_eq;
 use testutils::ensure_utils;
-use testutils::AssertCmdExt;
 
 /// Make sure we can't run this without required args.
 #[test]

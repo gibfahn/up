@@ -4,10 +4,10 @@ use color_eyre::Result;
 #[cfg(target_os = "macos")]
 use duct::Expression;
 use std::collections::HashMap;
+use testutils::AssertCmdExt;
 #[cfg(target_os = "macos")]
 use testutils::ensure_eq;
 use testutils::ensure_utils;
-use testutils::AssertCmdExt;
 #[cfg(target_os = "macos")]
 use up::exec::UpDuct;
 

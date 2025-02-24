@@ -4,9 +4,9 @@ use camino::Utf8PathBuf;
 use color_eyre::Result;
 use itertools::Itertools;
 use std::collections::HashMap;
+use testutils::AssertCmdExt;
 use testutils::ensure_eq;
 use testutils::ensure_utils;
-use testutils::AssertCmdExt;
 
 /// Run a full up with a bunch of configuration and check things work.
 #[test]

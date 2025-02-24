@@ -23,9 +23,9 @@ On non-macOS platforms this resolves to the empty string.
 */
 use self::EnvError as E;
 use crate::utils::files;
+use color_eyre::eyre::Result;
 use color_eyre::eyre::bail;
 use color_eyre::eyre::eyre;
-use color_eyre::eyre::Result;
 use displaydoc::Display;
 use std::collections::HashMap;
 use thiserror::Error;

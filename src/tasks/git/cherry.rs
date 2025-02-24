@@ -1,8 +1,8 @@
 //! `git cherry` command equivalent, finds equivalent commits.
 use crate::tasks::git::branch::get_branch_name;
 use crate::tasks::git::errors::GitError as E;
-use color_eyre::eyre::eyre;
 use color_eyre::eyre::Result;
+use color_eyre::eyre::eyre;
 use git2::Branch;
 use git2::DiffFormat;
 use git2::DiffOptions;

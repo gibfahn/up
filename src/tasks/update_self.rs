@@ -2,8 +2,8 @@
 use self::UpdateSelfError as E;
 use crate::cmd;
 use crate::opts::UpdateSelfOptions;
-use crate::tasks::task::TaskStatus;
 use crate::tasks::ResolveEnv;
+use crate::tasks::task::TaskStatus;
 use camino::Utf8PathBuf;
 use chrono::Utc;
 use color_eyre::eyre::Context;

@@ -2,8 +2,8 @@
 use super::status::ensure_repo_clean;
 use crate::tasks::git::checkout::set_and_checkout_head;
 use crate::tasks::git::errors::GitError as E;
-use color_eyre::eyre::bail;
 use color_eyre::eyre::Result;
+use color_eyre::eyre::bail;
 use git2::Reference;
 use git2::Repository;
 use std::str;

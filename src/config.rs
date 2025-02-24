@@ -1,17 +1,17 @@
 //! Manages the config files (default location ~/.config/up/).
 
-use crate::opts::start_time::StartTime;
 use crate::opts::GitOptions;
 use crate::opts::Opts;
 use crate::opts::RunOptions;
 use crate::opts::SubCommand;
+use crate::opts::start_time::StartTime;
 use crate::tasks::git;
 use crate::utils::files;
 use camino::Utf8Path;
 use camino::Utf8PathBuf;
+use color_eyre::eyre::Result;
 use color_eyre::eyre::bail;
 use color_eyre::eyre::ensure;
-use color_eyre::eyre::Result;
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
 use std::collections::HashMap;
@@ -231,69 +231,71 @@ mod tests {
     #[test]
     #[serial(home_dir)] // Test relies on or changes the $HOME env var.
     fn test_get_yaml_paths() -> Result<()> {
-        let orig_home = env::var("HOME").unwrap();
+        // SAFETY: test has a serial block so won't be run in parallel.
+        unsafe {
+            let orig_home = env::var("HOME").unwrap();
 
-        // Set up paths.
-        let default_path = "$XDG_CONFIG_HOME/up/up.yaml";
-        let fake_home_1 = testutils::fixtures_subdir(testutils::function_path!())?
-            .join("fake_home_dir_with_upconfig");
-        let config_yaml_1 = fake_home_1.join(".config/up/up.yaml");
-        let fake_home_2 = testutils::fixtures_subdir(testutils::function_path!())?
-            .join("fake_home_dir_without_upconfig");
+            // Set up paths.
+            let default_path = "$XDG_CONFIG_HOME/up/up.yaml";
+            let fake_home_1 = testutils::fixtures_subdir(testutils::function_path!())?
+                .join("fake_home_dir_with_upconfig");
+            let config_yaml_1 = fake_home_1.join(".config/up/up.yaml");
+            let fake_home_2 = testutils::fixtures_subdir(testutils::function_path!())?
+                .join("fake_home_dir_without_upconfig");
 
-        // With all options set, we should pick the one passed as command-line arg.
-        let args_config_path = env::current_exe().unwrap();
-        env::set_var("HOME", fake_home_1.clone());
-        env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".config"));
-        let config_path = UpConfig::get_up_yaml_path(args_config_path.to_str().unwrap());
-        ensure_eq!(config_path.unwrap(), args_config_path);
+            // With all options set, we should pick the one passed as command-line arg.
+            let args_config_path = env::current_exe().unwrap();
+            env::set_var("HOME", fake_home_1.clone());
+            env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".config"));
+            let config_path = UpConfig::get_up_yaml_path(args_config_path.to_str().unwrap());
+            ensure_eq!(config_path.unwrap(), args_config_path);
 
-        // If nothing is passed as an arg but UP_CONFIG exists, we should use it.
-        env::set_var("UP_CONFIG", args_config_path.clone());
-        env::set_var("HOME", fake_home_1.clone());
-        env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".config"));
-        let config_path = UpConfig::get_up_yaml_path(default_path);
-        ensure_eq!(config_path.unwrap(), args_config_path);
-        env::remove_var("UP_CONFIG");
+            // If nothing is passed as an arg but UP_CONFIG exists, we should use it.
+            env::set_var("UP_CONFIG", args_config_path.clone());
+            env::set_var("HOME", fake_home_1.clone());
+            env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".config"));
+            let config_path = UpConfig::get_up_yaml_path(default_path);
+            ensure_eq!(config_path.unwrap(), args_config_path);
+            env::remove_var("UP_CONFIG");
 
-        // If nothing is passed as an arg, we should use the XDG_CONFIG_HOME/up/up.yaml.
-        env::set_var("HOME", fake_home_1.clone());
-        env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".config"));
-        let config_path = UpConfig::get_up_yaml_path(default_path);
-        ensure_eq!(config_path.unwrap(), config_yaml_1);
+            // If nothing is passed as an arg, we should use the XDG_CONFIG_HOME/up/up.yaml.
+            env::set_var("HOME", fake_home_1.clone());
+            env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".config"));
+            let config_path = UpConfig::get_up_yaml_path(default_path);
+            ensure_eq!(config_path.unwrap(), config_yaml_1);
 
-        // If XDG_CONFIG_HOME is set we should use it.
-        env::set_var("HOME", fake_home_1.clone());
-        // Set XDG_CONFIG_HOME to a non-existent path.
-        env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".badconfig"));
-        let config_path = UpConfig::get_up_yaml_path(default_path);
-        ensure_eq!(
-            config_path.unwrap(),
-            fake_home_1.join(".badconfig/up/up.yaml")
-        );
+            // If XDG_CONFIG_HOME is set we should use it.
+            env::set_var("HOME", fake_home_1.clone());
+            // Set XDG_CONFIG_HOME to a non-existent path.
+            env::set_var("XDG_CONFIG_HOME", fake_home_1.join(".badconfig"));
+            let config_path = UpConfig::get_up_yaml_path(default_path);
+            ensure_eq!(
+                config_path.unwrap(),
+                fake_home_1.join(".badconfig/up/up.yaml")
+            );
 
-        // If XDG_CONFIG_HOME is missing we should use ~/.config/up/up.yaml.
-        env::remove_var("XDG_CONFIG_HOME");
-        let config_path = UpConfig::get_up_yaml_path(default_path);
-        ensure_eq!(config_path.unwrap(), config_yaml_1);
+            // If XDG_CONFIG_HOME is missing we should use ~/.config/up/up.yaml.
+            env::remove_var("XDG_CONFIG_HOME");
+            let config_path = UpConfig::get_up_yaml_path(default_path);
+            ensure_eq!(config_path.unwrap(), config_yaml_1);
 
-        // If XDG_CONFIG_HOME is missing and ~/.config doesn't exist we should use
-        // still use it.
-        env::set_var("HOME", fake_home_2.clone());
-        env::remove_var("XDG_CONFIG_HOME");
-        let config_path = UpConfig::get_up_yaml_path(default_path);
-        ensure_eq!(config_path.unwrap(), fake_home_2.join(".config/up/up.yaml"),);
+            // If XDG_CONFIG_HOME is missing and ~/.config doesn't exist we should use
+            // still use it.
+            env::set_var("HOME", fake_home_2.clone());
+            env::remove_var("XDG_CONFIG_HOME");
+            let config_path = UpConfig::get_up_yaml_path(default_path);
+            ensure_eq!(config_path.unwrap(), fake_home_2.join(".config/up/up.yaml"),);
 
-        // If none of the options are present and there is no ~ we should error.
-        // TODO(gib): how do we test for this?
-        // env::remove_var("HOME");
-        // env::remove_var("XDG_CONFIG_HOME");
-        // // Default arg, i.e. not passed.
-        // let config_path = UpConfig::get_up_yaml_path(default_path);
-        // ensure!(config_path.is_err(), "UpConfig path: {config_path}");
+            // If none of the options are present and there is no ~ we should error.
+            // TODO(gib): how do we test for this?
+            // env::remove_var("HOME");
+            // env::remove_var("XDG_CONFIG_HOME");
+            // // Default arg, i.e. not passed.
+            // let config_path = UpConfig::get_up_yaml_path(default_path);
+            // ensure!(config_path.is_err(), "UpConfig path: {config_path}");
 
-        env::set_var("HOME", orig_home);
-
+            env::set_var("HOME", orig_home);
+        }
         Ok(())
     }
 }

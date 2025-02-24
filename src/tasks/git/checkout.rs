@@ -1,15 +1,15 @@
 //! Checkout a git branch or ref.
 use crate::tasks::git::fetch::remote_callbacks;
 use crate::tasks::git::status::ensure_repo_clean;
+use color_eyre::eyre::Result;
 use color_eyre::eyre::bail;
 use color_eyre::eyre::eyre;
-use color_eyre::eyre::Result;
-use git2::build::CheckoutBuilder;
 use git2::BranchType;
 use git2::ErrorCode;
 use git2::FetchOptions;
 use git2::Repository;
 use git2::SubmoduleUpdateOptions;
+use git2::build::CheckoutBuilder;
 use std::convert::Into;
 use std::str;
 use tracing::debug;

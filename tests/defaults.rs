@@ -5,14 +5,14 @@ use color_eyre::Result;
 use duct::Expression;
 use predicates::prelude::*;
 use test_log::test;
-use testutils::ensure_eq;
 use testutils::AssertCmdExt;
+use testutils::ensure_eq;
 use tracing::debug;
 use tracing::info;
 use tracing::trace;
 use up::cmd;
-use up::exec::cmd;
 use up::exec::UpDuct;
+use up::exec::cmd;
 
 /**
 Key that is in the global plist on a newly setup machine, and that has the same value as yaml and as returned by the `defaults read` command.

@@ -285,7 +285,7 @@ fn write_plist(
             return Err(E::PlistWrite {
                 path: plist_path.to_path_buf(),
                 source: plist_error,
-            })
+            });
         }
     };
     trace!("Tried to write plist file, got IO error {io_error:?}, trying again with sudo");

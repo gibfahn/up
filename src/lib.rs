@@ -61,9 +61,9 @@ use crate::opts::SubCommand;
 use color_eyre::eyre::Result;
 use opts::DefaultsSubcommand;
 use opts::GenerateLib;
-use tasks::defaults;
 use tasks::TasksAction;
 use tasks::TasksDir;
+use tasks::defaults;
 use tracing::trace;
 
 mod config;

@@ -2,9 +2,9 @@
 use assert_cmd::Command;
 use camino::Utf8Path;
 use camino::Utf8PathBuf;
-use color_eyre::eyre::ensure;
-use color_eyre::eyre::OptionExt;
 use color_eyre::Result;
+use color_eyre::eyre::OptionExt;
+use color_eyre::eyre::ensure;
 pub use pretty_assertions;
 pub use pretty_assertions_sorted;
 use std::env;

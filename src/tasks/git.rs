@@ -1,9 +1,9 @@
 //! The git library task.
 use self::GitTaskError as E;
 use crate::opts::GitOptions;
-use crate::tasks::task::TaskStatus;
 use crate::tasks::ResolveEnv;
 use crate::tasks::TaskError;
+use crate::tasks::task::TaskStatus;
 use camino::Utf8PathBuf;
 use clap::Parser;
 use color_eyre::eyre::Result;

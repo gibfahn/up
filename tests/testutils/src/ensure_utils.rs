@@ -1,7 +1,7 @@
 use crate::ensure_eq;
 use camino::Utf8Path;
-use color_eyre::eyre::ensure;
 use color_eyre::Result;
+use color_eyre::eyre::ensure;
 use std::fs;
 
 /// Panic if there is a file, directory, or link at the path.

@@ -1,12 +1,12 @@
 //! Utilities for dealing with files, including wrappers around `std::fs` APIs.
 
-use crate::errors::UpError;
 use crate::UP_BUNDLE_ID;
+use crate::errors::UpError;
 use camino::Utf8Path;
 use camino::Utf8PathBuf;
-use color_eyre::eyre::eyre;
-use color_eyre::eyre::Context;
 use color_eyre::Result;
+use color_eyre::eyre::Context;
+use color_eyre::eyre::eyre;
 use std::fs;
 use std::fs::File;
 use std::fs::OpenOptions;

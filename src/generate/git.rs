@@ -2,12 +2,12 @@
 use self::GenerateGitError as E;
 use super::GENERATED_PRELUDE_COMMENT;
 use crate::opts::GenerateGitConfig;
+use crate::tasks::ResolveEnv;
+use crate::tasks::TaskError;
 use crate::tasks::git::GitConfig;
 use crate::tasks::git::GitRemote;
 use crate::tasks::task::Task;
 use crate::tasks::task::TaskStatus;
-use crate::tasks::ResolveEnv;
-use crate::tasks::TaskError;
 use crate::utils::files;
 use camino::Utf8Path;
 use camino::Utf8PathBuf;

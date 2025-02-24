@@ -1,9 +1,9 @@
 use color_eyre::Result;
 use std::collections::HashMap;
 use std::fs;
+use testutils::AssertCmdExt;
 use testutils::ensure_eq;
 use testutils::ensure_utils;
-use testutils::AssertCmdExt;
 use walkdir::WalkDir;
 
 /// Test that we can generate tasks from a sample workspace.

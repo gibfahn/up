@@ -1,22 +1,22 @@
 #![allow(clippy::str_to_string)] // schemars conflicts with this lint.
 
 //! Up task execution.
-use crate::exec::cmd_log;
 use crate::exec::UpDuct;
+use crate::exec::cmd_log;
 use crate::generate;
 use crate::log;
 use crate::opts::GenerateGitConfig;
 use crate::opts::LinkOptions;
 use crate::opts::UpdateSelfOptions;
 use crate::tasks;
-use crate::tasks::defaults::DefaultsConfig;
-use crate::tasks::git::GitConfig;
 use crate::tasks::ResolveEnv;
 use crate::tasks::TaskError as E;
+use crate::tasks::defaults::DefaultsConfig;
+use crate::tasks::git::GitConfig;
 use camino::Utf8Path;
 use camino::Utf8PathBuf;
-use color_eyre::eyre::eyre;
 use color_eyre::eyre::Result;
+use color_eyre::eyre::eyre;
 use schemars::JsonSchema;
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
@@ -28,10 +28,10 @@ use std::process::Output;
 use std::string::String;
 use std::time::Duration;
 use std::time::Instant;
+use tracing::Level;
 use tracing::debug;
 use tracing::info;
 use tracing::trace;
-use tracing::Level;
 
 /// Possible statuses an asynchronously running task can have.
 #[derive(Debug)]

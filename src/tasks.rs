@@ -1,7 +1,7 @@
 //! Logic for dealing with tasks executed by up.
+use self::TaskError as E;
 use self::task::CommandType;
 use self::task::Task;
-use self::TaskError as E;
 use crate::config;
 use crate::env::get_env;
 use crate::tasks::task::TaskStatus;
@@ -11,9 +11,9 @@ use crate::utils::user::get_and_keep_sudo;
 use camino::Utf8Path;
 use camino::Utf8PathBuf;
 use chrono::SecondsFormat;
+use color_eyre::eyre::Result;
 use color_eyre::eyre::bail;
 use color_eyre::eyre::eyre;
-use color_eyre::eyre::Result;
 use displaydoc::Display;
 use indicatif::ProgressState;
 use indicatif::ProgressStyle;
