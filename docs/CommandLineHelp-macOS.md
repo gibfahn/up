@@ -21,6 +21,7 @@ This document contains the help content for the `up` command-line program.
 * [`up doc manpages`↴](#up-doc-manpages)
 * [`up doc markdown`↴](#up-doc-markdown)
 * [`up list`↴](#up-list)
+* [`up faketty`↴](#up-faketty)
 
 ## `up`
 
@@ -48,6 +49,7 @@ For debugging, run with `RUST_LIB_BACKTRACE=1` to show error/panic traces. Logs 
 * `self` — Update the up CLI itself
 * `doc` — Generate various docs or completions for up
 * `list` — List available tasks
+* `faketty` — Runs a command in a fake tty
 
 ###### **Options:**
 
@@ -274,7 +276,7 @@ Generate various docs or completions for up
 
 * `completions` — Generate shell completions to stdout
 * `schema` — Write the up task yaml schema
-* `manpages` — Generate man pages for liv and its subcommands
+* `manpages` — Generate man pages for up and its subcommands
 * `markdown` — Print a markdown file with documentation for up and its subcommands
 
 
@@ -318,13 +320,13 @@ EXAMPLES:
 
 ## `up doc manpages`
 
-Generate man pages for liv and its subcommands.
+Generate man pages for up and its subcommands.
 
 Manpages are generated into the output directory specified by `--output-dir`.
 
 EXAMPLES:
 
-❯ liv generate manpages --output-dir /usr/local/share/man/man1/
+❯ up generate manpages --output-dir /usr/local/share/man/man1/
 
 **Usage:** `up doc manpages --output-dir <OUTPUT_DIR>`
 
@@ -374,6 +376,18 @@ List available tasks
    EXAMPLES:
 
    ❯ up run --exclude-tasks=brew,slowtask --exclude-tasks=otherslowtask
+
+
+
+## `up faketty`
+
+Runs a command in a fake tty.
+
+**Usage:** `up faketty [PROGRAM]...`
+
+###### **Arguments:**
+
+* `<PROGRAM>` — The program to run
 
 
 

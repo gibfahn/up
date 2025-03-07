@@ -1,63 +1,59 @@
 stable: Pulling from clux/muslrust
-4be1db8bbbeb: Pulling fs layer
-cfaa55eda8f7: Pulling fs layer
-442a5f1d1d46: Pulling fs layer
-4c6c7026fc5b: Pulling fs layer
-b5c939e59651: Pulling fs layer
-0a07509a0746: Pulling fs layer
-b6e1db31a9c4: Pulling fs layer
-dedd2c7d8471: Pulling fs layer
-1647917aac9e: Pulling fs layer
-032acbb171e9: Pulling fs layer
-d4d376ebf551: Pulling fs layer
-383dd67a1d80: Pulling fs layer
-aca21b397f39: Pulling fs layer
-4c6c7026fc5b: Waiting
-b5c939e59651: Waiting
-0a07509a0746: Waiting
-b6e1db31a9c4: Waiting
-dedd2c7d8471: Waiting
-1647917aac9e: Waiting
-032acbb171e9: Waiting
-aca21b397f39: Waiting
-d4d376ebf551: Waiting
-383dd67a1d80: Waiting
-4be1db8bbbeb: Verifying Checksum
-4be1db8bbbeb: Download complete
-4be1db8bbbeb: Pull complete
-4c6c7026fc5b: Verifying Checksum
-4c6c7026fc5b: Download complete
-b5c939e59651: Verifying Checksum
-b5c939e59651: Download complete
-0a07509a0746: Verifying Checksum
-0a07509a0746: Download complete
-cfaa55eda8f7: Download complete
-b6e1db31a9c4: Download complete
-dedd2c7d8471: Verifying Checksum
-dedd2c7d8471: Download complete
-1647917aac9e: Download complete
-032acbb171e9: Download complete
-383dd67a1d80: Verifying Checksum
-383dd67a1d80: Download complete
-cfaa55eda8f7: Pull complete
-aca21b397f39: Verifying Checksum
-aca21b397f39: Download complete
-d4d376ebf551: Verifying Checksum
-d4d376ebf551: Download complete
-442a5f1d1d46: Verifying Checksum
-442a5f1d1d46: Download complete
-442a5f1d1d46: Pull complete
-4c6c7026fc5b: Pull complete
-b5c939e59651: Pull complete
-0a07509a0746: Pull complete
-b6e1db31a9c4: Pull complete
-dedd2c7d8471: Pull complete
-1647917aac9e: Pull complete
-032acbb171e9: Pull complete
-d4d376ebf551: Pull complete
-383dd67a1d80: Pull complete
-aca21b397f39: Pull complete
-Digest: sha256:ad8f5707da474b774dc41b9073e0380918707d7408ad00b2261f3bd397d076d7
+d99cf942ffb2: Pulling fs layer
+5627cc77306c: Pulling fs layer
+19de4f1dd6a0: Pulling fs layer
+7b9864fedad9: Pulling fs layer
+df89a0942495: Pulling fs layer
+e8fdc047383a: Pulling fs layer
+9dbba63e4287: Pulling fs layer
+bea8604ab66d: Pulling fs layer
+1419d306faf3: Pulling fs layer
+a729d614aaa3: Pulling fs layer
+1b54c7250109: Pulling fs layer
+322cfc0786eb: Pulling fs layer
+7b9864fedad9: Waiting
+df89a0942495: Waiting
+e8fdc047383a: Waiting
+1419d306faf3: Waiting
+9dbba63e4287: Waiting
+bea8604ab66d: Waiting
+a729d614aaa3: Waiting
+1b54c7250109: Waiting
+322cfc0786eb: Waiting
+d99cf942ffb2: Download complete
+d99cf942ffb2: Pull complete
+7b9864fedad9: Download complete
+df89a0942495: Verifying Checksum
+df89a0942495: Download complete
+e8fdc047383a: Verifying Checksum
+e8fdc047383a: Download complete
+9dbba63e4287: Download complete
+5627cc77306c: Verifying Checksum
+5627cc77306c: Download complete
+bea8604ab66d: Verifying Checksum
+bea8604ab66d: Download complete
+1419d306faf3: Verifying Checksum
+1419d306faf3: Download complete
+1b54c7250109: Verifying Checksum
+1b54c7250109: Download complete
+5627cc77306c: Pull complete
+a729d614aaa3: Verifying Checksum
+a729d614aaa3: Download complete
+322cfc0786eb: Verifying Checksum
+322cfc0786eb: Download complete
+19de4f1dd6a0: Verifying Checksum
+19de4f1dd6a0: Download complete
+19de4f1dd6a0: Pull complete
+7b9864fedad9: Pull complete
+df89a0942495: Pull complete
+e8fdc047383a: Pull complete
+9dbba63e4287: Pull complete
+bea8604ab66d: Pull complete
+1419d306faf3: Pull complete
+a729d614aaa3: Pull complete
+1b54c7250109: Pull complete
+322cfc0786eb: Pull complete
+Digest: sha256:99f33b9fce13ca3c448c12b7fb4d5e9ad79fae56df14bab831e20c7d8157b18d
 Status: Downloaded newer image for clux/muslrust:stable
 docker.io/clux/muslrust:stable
 # Command-Line Help for `up`
@@ -83,6 +79,7 @@ This document contains the help content for the `up` command-line program.
 * [`up doc manpages`↴](#up-doc-manpages)
 * [`up doc markdown`↴](#up-doc-markdown)
 * [`up list`↴](#up-list)
+* [`up faketty`↴](#up-faketty)
 
 ## `up`
 
@@ -110,6 +107,7 @@ For debugging, run with `RUST_LIB_BACKTRACE=1` to show error/panic traces. Logs 
 * `self` — Update the up CLI itself
 * `doc` — Generate various docs or completions for up
 * `list` — List available tasks
+* `faketty` — Runs a command in a fake tty
 
 ###### **Options:**
 
@@ -336,7 +334,7 @@ Generate various docs or completions for up
 
 * `completions` — Generate shell completions to stdout
 * `schema` — Write the up task yaml schema
-* `manpages` — Generate man pages for liv and its subcommands
+* `manpages` — Generate man pages for up and its subcommands
 * `markdown` — Print a markdown file with documentation for up and its subcommands
 
 
@@ -380,13 +378,13 @@ EXAMPLES:
 
 ## `up doc manpages`
 
-Generate man pages for liv and its subcommands.
+Generate man pages for up and its subcommands.
 
 Manpages are generated into the output directory specified by `--output-dir`.
 
 EXAMPLES:
 
-❯ liv generate manpages --output-dir /usr/local/share/man/man1/
+❯ up generate manpages --output-dir /usr/local/share/man/man1/
 
 **Usage:** `up doc manpages --output-dir <OUTPUT_DIR>`
 
@@ -436,6 +434,18 @@ List available tasks
    EXAMPLES:
 
    ❯ up run --exclude-tasks=brew,slowtask --exclude-tasks=otherslowtask
+
+
+
+## `up faketty`
+
+Runs a command in a fake tty.
+
+**Usage:** `up faketty [PROGRAM]...`
+
+###### **Arguments:**
+
+* `<PROGRAM>` — The program to run
 
 
 
