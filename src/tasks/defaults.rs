@@ -408,13 +408,13 @@ pub(crate) fn read(current_host: bool, defaults_opts: DefaultsReadOptions) -> Re
             .as_dictionary()
             .ok_or_else(|| E::NotADictionary {
                 domain: domain.clone(),
-                key: key.to_string(),
+                key: key.clone(),
                 plist_type: get_plist_value_type(&plist),
             })?
             .get(key)
             .ok_or_else(|| E::MissingKey {
                 domain: domain.clone(),
-                key: key.to_string(),
+                key: key.clone(),
             })?,
         None => &plist,
     };

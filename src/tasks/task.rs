@@ -252,7 +252,7 @@ impl Task {
             }
             .map_err(|e| E::TaskError {
                 name: self.name.clone(),
-                lib: lib.to_string(),
+                lib: lib.clone(),
                 source: e,
             })?;
             return Ok(status);
