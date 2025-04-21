@@ -28,8 +28,8 @@ use std::env;
 use std::sync::Arc;
 use std::time::Duration;
 use std::time::Instant;
-use tracing::Level;
 use tracing::debug;
+use tracing::info;
 use tracing::level_filters::LevelFilter;
 use tracing::trace;
 use tracing::warn;
@@ -42,10 +42,10 @@ use tracing_subscriber::fmt::format::DefaultFields;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::prelude::*;
 use tracing_subscriber::util::SubscriberInitExt;
-use up::log;
 use up::opts::Opts;
 use up::utils::errors::log_error;
 use up::utils::files;
+use up::utils::time::human_readable_duration;
 
 /// Env vars to avoid printing when we log the current environment.
 const IGNORED_ENV_VARS: [&str; 1] = [
@@ -102,15 +102,8 @@ fn main() -> Result<()> {
 
     result?;
 
-    // No need to log the time we took to run by default unless it actually took some time.
-    let now_elapsed = now.elapsed();
-    let level = if now_elapsed > Duration::from_secs(10) {
-        Level::INFO
-    } else {
-        Level::DEBUG
-    };
-    log!(level, "Up ran successfully in {now_elapsed:?}");
-    trace!("Finished up.");
+    log_elapsed_time(now.elapsed());
+
     Ok(())
 }
 
@@ -216,4 +209,23 @@ fn set_up_logging(opts: &Opts) -> Result<(Utf8PathBuf, LevelFilter)> {
     debug!("Writing trace logs to {log_path:?}");
 
     Ok((log_path, log_filter))
+}
+
+/// Log the time that elapsed in a human-readable manner.
+fn log_elapsed_time(now_elapsed: Duration) {
+    // Always debug log the real duration.
+    debug!("Up ran successfully in {now_elapsed:?}");
+    // No need to log the time we took to run by default unless it actually took some time.
+    if now_elapsed > Duration::from_secs(10) {
+        info!(
+            "Up ran successfully in {}",
+            human_readable_duration(now_elapsed).unwrap_or_else(|e| {
+                debug!(
+                    "Failed to format duration as human-readable: {err}",
+                    err = log_error(&e)
+                );
+                format!("{now_elapsed:?}")
+            }),
+        );
+    }
 }
