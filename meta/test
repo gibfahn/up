@@ -1,12 +1,26 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 set -euo pipefail
-
-# Run unit tests.
-# To see more verbose test logging set: LOG_LEVEL=trace
 
 which cargo-nextest &>/dev/null || brew install cargo-nextest
 
 set -x
 
-cargo nextest run --run-ignored=all
+main() {
+  # First sanity check everything builds, even tests.
+  cargo build --all-targets
+  # Then check it builds on the native arch in Linux.
+  meta/cargo-docker --pull -- cargo build --release --color=always --all-targets
+
+  # Run unit tests.
+  # To see more verbose test logging set: RUST_LOG=trace
+  cargo nextest run --run-ignored=all
+
+  # Run these last as they're slow.
+  meta/cargo-docker --arch arm64 -- bash -cex 'rustup component add clippy rustfmt && cargo test --release --no-fail-fast --color=always -- --include-ignored'
+  meta/cargo-docker --arch amd64 -- bash -cex 'rustup component add clippy rustfmt && cargo test --release --no-fail-fast --color=always -- --include-ignored'
+
+  echo >&2 "✅ All tests passed"
+}
+
+main $@
