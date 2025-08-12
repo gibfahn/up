@@ -17,8 +17,6 @@
     clippy::unseparated_literal_suffix,
     // `.to_owned()` is clearer for str -> String conversions.
     clippy::str_to_string,
-    // `.clone()` is clearer from String -> String.
-    clippy::string_to_string,
     // This macro should not be present in production code
     clippy::todo,
     // Documenting why unsafe things are okay is useful.

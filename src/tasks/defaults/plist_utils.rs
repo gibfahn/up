@@ -198,11 +198,11 @@ pub(super) fn write_defaults_values(
         replace_ellipsis_array(&mut new_value, old_value);
         replace_ellipsis_dict(&mut new_value, old_value);
 
-        if let Some(old_value) = old_value {
-            if old_value == &new_value {
-                trace!("Nothing to do, values already match: {key:?} = {new_value:?}");
-                continue;
-            }
+        if let Some(old_value) = old_value
+            && old_value == &new_value
+        {
+            trace!("Nothing to do, values already match: {key:?} = {new_value:?}");
+            continue;
         }
 
         values_changed = true;

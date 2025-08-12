@@ -83,22 +83,19 @@ fn human_readable_timedelta(mut timedelta: TimeDelta) -> Result<String> {
     }
 
     // Add microseconds if we took less than 1ms.
-    if !numbers_added {
-        if let Some(microseconds) = timedelta.num_microseconds() {
-            if microseconds != 0 {
-                numbers_added = true;
-                output.push_str(&microseconds.to_string());
-                output.push_str("µs");
-            }
-        }
+    if !numbers_added
+        && let Some(microseconds) = timedelta.num_microseconds()
+        && microseconds != 0
+    {
+        numbers_added = true;
+        output.push_str(&microseconds.to_string());
+        output.push_str("µs");
     }
 
     // Add nanoseconds if we took less than 1µs.
-    if !numbers_added {
-        if let Some(nanoseconds) = timedelta.num_nanoseconds() {
-            output.push_str(&nanoseconds.to_string());
-            output.push_str("ns");
-        }
+    if !numbers_added && let Some(nanoseconds) = timedelta.num_nanoseconds() {
+        output.push_str(&nanoseconds.to_string());
+        output.push_str("ns");
     }
     Ok(output)
 }

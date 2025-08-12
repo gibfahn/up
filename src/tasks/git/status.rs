@@ -131,7 +131,7 @@ pub(super) fn warn_for_unpushed_changes(
 /// clean`. Returns an error if getting the repo status errors.
 ///
 /// To bail using the statuses use `status_short(repo, &statuses)`.
-fn repo_statuses(repo: &Repository) -> Result<Statuses> {
+fn repo_statuses(repo: &Repository) -> Result<Statuses<'_>> {
     let mut status_options = StatusOptions::new();
     // Ignored files don't count as dirty, so don't include them.
     status_options

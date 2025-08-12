@@ -56,7 +56,7 @@ pub(super) fn prune_merged_branches(repo: &Repository, remote_name: &str) -> Res
 /// Work out branches that we can prune.
 /// These should be PR branches that have already been merged into their
 /// upstream branches.
-fn branches_to_prune(repo: &Repository) -> Result<Vec<Branch>> {
+fn branches_to_prune(repo: &Repository) -> Result<Vec<Branch<'_>>> {
     let mut branches_to_prune = Vec::new();
 
     let mut remote_branches = Vec::new();

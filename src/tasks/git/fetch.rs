@@ -22,7 +22,7 @@ const RETRY_SLEEP_INTERVAL_S: u64 = 2;
 /// Prepare the remote authentication callbacks for fetching.
 ///
 /// Refs: <https://github.com/rust-lang/cargo/blob/2f115a76e5a1e5eb11cd29e95f972ed107267847/src/cargo/sources/git/utils.rs#L588>
-pub(super) fn remote_callbacks(count: &mut usize) -> RemoteCallbacks {
+pub(super) fn remote_callbacks(count: &mut usize) -> RemoteCallbacks<'_> {
     let mut remote_callbacks = RemoteCallbacks::new();
     remote_callbacks.credentials(move |url, username_from_url, allowed_types| {
         *count += 1;

@@ -139,7 +139,7 @@ fn sha256_digest<R: Read>(mut reader: R) -> Result<Digest> {
 }
 
 /// Get a list of revisions between two references.
-fn rev_list(repo: &Repository, from: Oid, to: Oid) -> Result<Revwalk> {
+fn rev_list(repo: &Repository, from: Oid, to: Oid) -> Result<Revwalk<'_>> {
     let mut revwalk = repo.revwalk()?;
     // TODO(gib): do I need to set a revwalk.set_sorting(Sort::REVERSE) here?
     revwalk.push(from)?;

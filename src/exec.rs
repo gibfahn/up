@@ -36,7 +36,7 @@ where
             " {arg}",
             arg = shell_escape::escape(arg.into().to_string_lossy())
         )
-        .unwrap();
+        .expect("Writing to a string should never fail.");
     }
 
     log!(l, "{formatted_cmd}");

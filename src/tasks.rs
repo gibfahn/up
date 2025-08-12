@@ -155,11 +155,11 @@ pub fn run(
             continue;
         }
 
-        if let Some(filter) = filter_tasks_set.as_ref() {
-            if !filter.contains(name) {
-                debug!("Not running task '{name}' as not in tasks filter {filter:?}",);
-                continue;
-            }
+        if let Some(filter) = filter_tasks_set.as_ref()
+            && !filter.contains(name)
+        {
+            debug!("Not running task '{name}' as not in tasks filter {filter:?}",);
+            continue;
         }
         tasks.insert(name.clone(), task);
     }
@@ -233,10 +233,8 @@ fn run_tasks(
                 &task_tempdir,
                 console,
             );
-            if !keep_going {
-                if let TaskStatus::Failed(e) = task.status {
-                    bail!(e);
-                }
+            if !keep_going && let TaskStatus::Failed(e) = task.status {
+                bail!(e);
             }
             completed_tasks.push(task);
         }
