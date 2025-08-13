@@ -3,8 +3,8 @@
 use crate::cmd_debug;
 use color_eyre::Result;
 use color_eyre::eyre::eyre;
-use serde::Deserialize;
-use serde::Serialize;
+use serde_derive::Deserialize;
+use serde_derive::Serialize;
 
 /// Get the hardware UUID of the current Mac.
 /// You can get the Hardware UUID from:
