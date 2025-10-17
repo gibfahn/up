@@ -157,7 +157,7 @@ fn test_no_todo() -> Result<()> {
 
         for disallowed_string in DISALLOWED_STRINGS {
             if text.contains(disallowed_string) {
-                println!("ERROR: {path} contains disallowed string '{disallowed_string}'");
+                eprintln!("ERROR: {path} contains disallowed string '{disallowed_string}'");
                 files_with_todos.push(path.clone());
             }
         }
@@ -267,14 +267,14 @@ fn cargo_cmd(current_dir: &Utf8Path, fmt: CargoCmdType) -> Result<Output> {
     // Only used by `cargo doc`, but should be fine to have set everywhere.
     cmd.env("RUSTDOCFLAGS", "--deny=warnings");
     cmd.current_dir(current_dir);
-    println!("Running '{cmd:?}'");
+    eprintln!("Running '{cmd:?}'");
     let cmd_output = cmd.output()?;
-    println!("  status: {}", cmd_output.status);
+    eprintln!("  status: {}", cmd_output.status);
     if !cmd_output.stdout.is_empty() {
-        println!("  stdout: {}", String::from_utf8_lossy(&cmd_output.stdout));
+        eprintln!("  stdout: {}", String::from_utf8_lossy(&cmd_output.stdout));
     }
     if !cmd_output.stderr.is_empty() {
-        println!(
+        eprintln!(
             "  stderr:\n<<<\n{}\n>>>",
             String::from_utf8_lossy(&cmd_output.stderr)
         );

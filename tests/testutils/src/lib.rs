@@ -152,7 +152,7 @@ macro_rules! function_path {
 ///
 /// Fails if any of the underlying file system operations fail.
 pub fn copy_all(from_dir: &Utf8Path, to_dir: &Utf8Path) -> Result<()> {
-    println!("Copying everything in {from_dir} to {to_dir}");
+    eprintln!("Copying everything in {from_dir} to {to_dir}");
     ensure!(
         from_dir.exists(),
         "Cannot copy from non-existent directory {from_dir}.",
@@ -166,7 +166,7 @@ pub fn copy_all(from_dir: &Utf8Path, to_dir: &Utf8Path) -> Result<()> {
         let from_path = <&Utf8Path>::try_from(from_path.path())?;
 
         let rel_path = from_path.strip_prefix(from_dir)?;
-        println!("Copying: {rel_path}");
+        eprintln!("Copying: {rel_path}");
         let to_path = to_dir.join(rel_path);
 
         let file_type = from_path_metadata.file_type();

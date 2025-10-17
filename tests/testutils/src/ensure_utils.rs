@@ -18,7 +18,7 @@ pub fn nothing_at(path: &Utf8Path) -> Result<()> {
 /// Panic if there is not a file at the path, or if the contents don't match.
 pub fn file(path: &Utf8Path, contents: &str) -> Result<()> {
     if !path.is_file() {
-        println!("Path: {path}")
+        eprintln!("Path: {path}")
     };
     ensure!(
         path.exists(),
