@@ -302,6 +302,7 @@ impl Task {
             command.run_with_inherit()
         } else {
             command
+                .stdin_null()
                 .stderr_path(&task_output_file)
                 .run_with_path(&task_output_file)
         };
