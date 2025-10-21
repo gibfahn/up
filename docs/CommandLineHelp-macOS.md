@@ -58,7 +58,7 @@ For debugging, run with `RUST_LIB_BACKTRACE=1` to show error/panic traces. Logs 
   Default value: `up=info`
 * `--temp-dir <TEMP_DIR>` — Temporary directory to use for logs, fifos, and other intermediate artifacts.
 
-  Default value: `/var/folders/kf/mtd6c3ys0tvb6ppy_8rdh5hr0000gn/T/up`
+  Default value: `/var/folders/s9/2z6dr_bd0c75bg_25gn30zbr0000gn/T/up`
 * `--file-log-level <FILE_LOG_LEVEL>` — Set the file logging level explicitly (options: off, error, warn, info, debug, trace)
 
   Default value: `trace`
@@ -329,6 +329,8 @@ EXAMPLES:
 ❯ up generate manpages --output-dir /usr/local/share/man/man1/
 
 **Usage:** `up doc manpages --output-dir <OUTPUT_DIR>`
+
+**Command Alias:** `man`
 
 ###### **Options:**
 

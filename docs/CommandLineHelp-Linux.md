@@ -1,59 +1,42 @@
 stable: Pulling from clux/muslrust
-d99cf942ffb2: Pulling fs layer
-5627cc77306c: Pulling fs layer
-19de4f1dd6a0: Pulling fs layer
-7b9864fedad9: Pulling fs layer
-df89a0942495: Pulling fs layer
-e8fdc047383a: Pulling fs layer
-9dbba63e4287: Pulling fs layer
-bea8604ab66d: Pulling fs layer
-1419d306faf3: Pulling fs layer
-a729d614aaa3: Pulling fs layer
-1b54c7250109: Pulling fs layer
-322cfc0786eb: Pulling fs layer
-7b9864fedad9: Waiting
-df89a0942495: Waiting
-e8fdc047383a: Waiting
-1419d306faf3: Waiting
-9dbba63e4287: Waiting
-bea8604ab66d: Waiting
-a729d614aaa3: Waiting
-1b54c7250109: Waiting
-322cfc0786eb: Waiting
-d99cf942ffb2: Download complete
-d99cf942ffb2: Pull complete
-7b9864fedad9: Download complete
-df89a0942495: Verifying Checksum
-df89a0942495: Download complete
-e8fdc047383a: Verifying Checksum
-e8fdc047383a: Download complete
-9dbba63e4287: Download complete
-5627cc77306c: Verifying Checksum
-5627cc77306c: Download complete
-bea8604ab66d: Verifying Checksum
-bea8604ab66d: Download complete
-1419d306faf3: Verifying Checksum
-1419d306faf3: Download complete
-1b54c7250109: Verifying Checksum
-1b54c7250109: Download complete
-5627cc77306c: Pull complete
-a729d614aaa3: Verifying Checksum
-a729d614aaa3: Download complete
-322cfc0786eb: Verifying Checksum
-322cfc0786eb: Download complete
-19de4f1dd6a0: Verifying Checksum
-19de4f1dd6a0: Download complete
-19de4f1dd6a0: Pull complete
-7b9864fedad9: Pull complete
-df89a0942495: Pull complete
-e8fdc047383a: Pull complete
-9dbba63e4287: Pull complete
-bea8604ab66d: Pull complete
-1419d306faf3: Pull complete
-a729d614aaa3: Pull complete
-1b54c7250109: Pull complete
-322cfc0786eb: Pull complete
-Digest: sha256:99f33b9fce13ca3c448c12b7fb4d5e9ad79fae56df14bab831e20c7d8157b18d
+a91ffad96809: Pulling fs layer
+00d57759a07d: Pulling fs layer
+2e30249cb00a: Pulling fs layer
+102b2e0f9732: Pulling fs layer
+7315dbb7365a: Pulling fs layer
+63334b69e9d7: Pulling fs layer
+bbf44906b39f: Pulling fs layer
+5fd6c348b79c: Pulling fs layer
+5fd6c348b79c: Waiting
+bbf44906b39f: Waiting
+63334b69e9d7: Waiting
+102b2e0f9732: Waiting
+7315dbb7365a: Waiting
+2e30249cb00a: Verifying Checksum
+2e30249cb00a: Download complete
+a91ffad96809: Verifying Checksum
+a91ffad96809: Download complete
+a91ffad96809: Pull complete
+102b2e0f9732: Verifying Checksum
+102b2e0f9732: Download complete
+63334b69e9d7: Verifying Checksum
+63334b69e9d7: Download complete
+bbf44906b39f: Verifying Checksum
+bbf44906b39f: Download complete
+5fd6c348b79c: Verifying Checksum
+5fd6c348b79c: Download complete
+00d57759a07d: Verifying Checksum
+00d57759a07d: Download complete
+7315dbb7365a: Verifying Checksum
+7315dbb7365a: Download complete
+00d57759a07d: Pull complete
+2e30249cb00a: Pull complete
+102b2e0f9732: Pull complete
+7315dbb7365a: Pull complete
+63334b69e9d7: Pull complete
+bbf44906b39f: Pull complete
+5fd6c348b79c: Pull complete
+Digest: sha256:398b1c95b7eb7976a07aa316b99f8b35c7cc2c91953e57d2bec0e49b1fb762ef
 Status: Downloaded newer image for clux/muslrust:stable
 docker.io/clux/muslrust:stable
 # Command-Line Help for `up`
@@ -387,6 +370,8 @@ EXAMPLES:
 ❯ up generate manpages --output-dir /usr/local/share/man/man1/
 
 **Usage:** `up doc manpages --output-dir <OUTPUT_DIR>`
+
+**Command Alias:** `man`
 
 ###### **Options:**
 

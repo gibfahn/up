@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.18.1](https://github.com/gibfahn/up/releases/tag/0.18.1) (2025-10-21)
+
+### Bug Fixes
+- task: don't pass stdin to a file when running in background ([56f5cf0](https://github.com/gibfahn/up/commit/56f5cf0c16b28e1c23b0872c44d7a53aecfb70d5))
+- print human-readable time taken if we ran for over 10s ([2bb7fbd](https://github.com/gibfahn/up/commit/2bb7fbd08a76f2687338ce9cd63f250fe6774646))
+
 ## [0.18.0](https://github.com/gibfahn/up/releases/tag/0.18.0) (2025-03-07)
 
 ### Features
