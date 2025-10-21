@@ -1,3 +1,4 @@
+#![allow(unused_assignments)] // Rust nightly bug: https://github.com/rust-lang/rust/issues/147648
 //! The link library task.
 use crate::opts::LinkOptions;
 use crate::tasks::ResolveEnv;

@@ -1,3 +1,4 @@
+#![allow(unused_assignments)] // Rust nightly bug: https://github.com/rust-lang/rust/issues/147648
 //! Git errors.
 use camino::Utf8PathBuf;
 use displaydoc::Display;

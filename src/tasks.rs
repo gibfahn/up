@@ -1,3 +1,4 @@
+#![allow(unused_assignments)] // Rust nightly bug: https://github.com/rust-lang/rust/issues/147648
 //! Logic for dealing with tasks executed by up.
 use self::TaskError as E;
 use self::task::CommandType;
