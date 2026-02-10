@@ -5,7 +5,7 @@ Copied from <https://github.com/dtolnay/faketty/>, which unfortunately doesn't o
 
 #![deny(unsafe_op_in_unsafe_fn)]
 #![allow(
-    clippy::empty_enum,
+    clippy::empty_enums,
     clippy::indexing_slicing,
     clippy::let_underscore_untyped,
     clippy::missing_docs_in_private_items,

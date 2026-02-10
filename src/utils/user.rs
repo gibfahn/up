@@ -68,7 +68,7 @@ pub(crate) fn get_and_keep_sudo(yes: bool) -> Result<()> {
     thread::spawn(|| {
         // Only refresh sudo for max 24 hours.
         for _ in 1..1440 {
-            thread::sleep(Duration::from_secs(60));
+            thread::sleep(Duration::from_mins(1));
             if let Err(e) = cmd_debug!("sudo", "-vn").run_with(Expression::stdout_to_stderr) {
                 warn!("Refreshing sudo with 'sudo -vn' failed with: {e:#}");
             }

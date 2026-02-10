@@ -341,7 +341,7 @@ fn run_task(
     let now = Instant::now();
     task.run(env_fn, env, task_tempdir, console);
     let elapsed_time = now.elapsed();
-    if elapsed_time > Duration::from_secs(60) {
+    if elapsed_time > Duration::from_mins(1) {
         warn!("Task took {elapsed_time:?}");
     }
     task

@@ -52,7 +52,7 @@ pub(crate) fn update(git_config: &GitConfig) -> Result<TaskStatus> {
         });
     let elapsed_time = now.elapsed();
     // TODO(gib): configurable logging for long actions.
-    if elapsed_time > Duration::from_secs(60) {
+    if elapsed_time > Duration::from_mins(1) {
         warn!("Git update took {elapsed_time:?}",);
     }
     result

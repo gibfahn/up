@@ -130,7 +130,7 @@ fn set_up_logging(opts: &Opts) -> Result<(Utf8PathBuf, LevelFilter)> {
                 |state: &ProgressState, writer: &mut dyn std::fmt::Write| {
                     let elapsed = state.elapsed();
 
-                    if elapsed > Duration::from_secs(60) {
+                    if elapsed > Duration::from_mins(1) {
                         // Red
                         let _ = write!(writer, "\x1b[{}m", 1 + 30);
                     } else if elapsed > Duration::from_secs(10) {
