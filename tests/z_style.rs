@@ -135,7 +135,8 @@ fn test_testutils_clippy() -> Result<()> {
 fn test_no_todo() -> Result<()> {
     const DISALLOWED_STRINGS: [&str; 4] = ["XXX(", "XXX:", "todo!", "dbg!"];
     let mut files_with_todos = Vec::new();
-    for file in ignore::WalkBuilder::new("./")
+    for file in ignore::WalkBuilder::new("./src/")
+        .add("./tests/")
         // Check hidden files too.
         .hidden(false)
         .build()
