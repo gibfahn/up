@@ -175,11 +175,6 @@ pub fn run(
     debug!("Task count: {:?}", tasks.len());
     trace!("Task list: {tasks:#?}");
 
-    let console = config
-        .console
-        .unwrap_or_else(|| bootstrap_tasks.len() + tasks.len() == 1);
-    trace!("Setting console option to: {console}");
-
     match tasks_action {
         TasksAction::List => println!("{}", tasks.keys().join("\n")),
         TasksAction::Run => {
@@ -198,7 +193,7 @@ pub fn run(
                 &env,
                 &run_tempdir,
                 config.keep_going,
-                console,
+                config.console,
             )?;
         }
     }
@@ -212,14 +207,18 @@ fn run_tasks(
     env: &HashMap<String, String>,
     temp_dir: &Utf8Path,
     keep_going: bool,
-    console: bool,
+    console_opt: Option<bool>,
 ) -> Result<()> {
     let mut completed_tasks = Vec::new();
 
     // Has to be top-level so span continues for whole run.
-    let _header_span;
+    let mut _header_span;
+    let mut header_set_up = false;
+    let mut console = console_opt.unwrap_or(true);
     if !console {
+        // Don't want the live header if in console mode.
         _header_span = set_up_header(tasks.len() + bootstrap_tasks.len())?;
+        header_set_up = true;
     }
 
     if !bootstrap_tasks.is_empty() {
@@ -239,6 +238,14 @@ fn run_tasks(
             }
             completed_tasks.push(task);
         }
+    }
+
+    console = console_opt.unwrap_or(tasks.len() == 1);
+    trace!("Setting console option to: {console}");
+
+    if !console && !header_set_up {
+        _header_span = set_up_header(tasks.len())?;
+        header_set_up = true;
     }
 
     completed_tasks.extend(

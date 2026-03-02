@@ -55,7 +55,7 @@ pub(super) fn do_ff_merge<'a>(
 fn fast_forward(repo: &Repository, lb: &mut Reference, rc: &git2::AnnotatedCommit) -> Result<()> {
     let name = lb.name().map_or_else(
         || String::from_utf8_lossy(lb.name_bytes()).to_string(),
-        std::string::ToString::to_string,
+        str::to_owned,
     );
     let msg = format!("Fast-Forward: Setting {name} to id: {}", rc.id());
     debug!("{msg}");
