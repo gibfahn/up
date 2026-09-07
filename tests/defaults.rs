@@ -137,6 +137,28 @@ struct TestCase {
     defaults_check_value: &'static str,
 }
 
+/// Collapse any run of consecutive backslashes down to a single backslash.
+///
+/// The `defaults read` tool escapes backslashes differently across macOS versions (older versions
+/// emit more backslashes than newer ones for the same stored value), so we normalise both the
+/// expected and actual output before comparing to accept single or double backslashes.
+fn collapse_backslashes(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    let mut prev_backslash = false;
+    for c in s.chars() {
+        if c == '\\' {
+            if !prev_backslash {
+                out.push(c);
+            }
+            prev_backslash = true;
+        } else {
+            out.push(c);
+            prev_backslash = false;
+        }
+    }
+    out
+}
+
 #[test]
 fn test_defaults_write_local() -> Result<()> {
     let temp_dir = testutils::temp_dir("up", testutils::function_path!()).unwrap();
@@ -368,7 +390,10 @@ fn test_defaults_write_local() -> Result<()> {
             let new_default = cmd!("defaults", "read", &domain, &defaults_key)
                 .read()
                 .unwrap();
-            ensure_eq!(*defaults_check_value, new_default);
+            ensure_eq!(
+                collapse_backslashes(defaults_check_value),
+                collapse_backslashes(&new_default)
+            );
         }
     }
 
