@@ -1,9 +1,9 @@
 //! Checkout a git branch or ref.
 use crate::tasks::git::fetch::remote_callbacks;
 use crate::tasks::git::status::ensure_repo_clean;
+use color_eyre::eyre::Context;
 use color_eyre::eyre::Result;
 use color_eyre::eyre::bail;
-use color_eyre::eyre::eyre;
 use git2::BranchType;
 use git2::ErrorCode;
 use git2::FetchOptions;
@@ -46,7 +46,7 @@ pub(super) fn checkout_branch(
             // A branch is currently checked out.
             let current_head = current_head.name();
             trace!("Current head is {current_head:?}, branch_name is {branch_name}",);
-            if !force && !repo.head_detached()? && current_head == Some(branch_name) {
+            if !force && !repo.head_detached()? && current_head.ok() == Some(branch_name) {
                 debug!("Repo head is already {branch_name}, skipping branch checkout...",);
                 return Ok(());
             }
@@ -147,7 +147,7 @@ pub(super) fn needs_checkout(repo: &Repository, branch_name: &str) -> bool {
     match repo.head().map_err(Into::into).and_then(|h| {
         h.shorthand()
             .map(ToOwned::to_owned)
-            .ok_or_else(|| eyre!("Current branch is not valid UTF-8"))
+            .wrap_err("Current branch is not valid UTF-8")
     }) {
         Ok(current_branch) if current_branch == branch_name => {
             debug!("Already on branch: '{branch_name}'");

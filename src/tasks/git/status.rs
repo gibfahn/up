@@ -221,7 +221,7 @@ fn status_short(repo: &Repository, statuses: &git2::Statuses) -> Result<String> 
         write!(
             output,
             "{}",
-            &match (index_status, worktree_status) {
+            match (index_status, worktree_status) {
                 ('R', 'R') => format!("RR {a} {b} {c}{extra}\n"),
                 ('R', worktree_status) => format!("R{worktree_status} {a} {b}{extra}\n"),
                 (index_status, 'R') => {

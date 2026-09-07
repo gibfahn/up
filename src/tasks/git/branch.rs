@@ -99,10 +99,7 @@ fn get_push_remote(branch: &str, config: &git2::Config) -> Result<Option<String>
 pub(super) fn calculate_head(repo: &Repository, remote: &mut Remote) -> Result<String> {
     let head_if_set = repo.head();
     Ok(match head_if_set {
-        Ok(head) => head
-            .shorthand()
-            .map(ToOwned::to_owned)
-            .ok_or(E::InvalidBranchError)?,
+        Ok(head) => head.shorthand().wrap_err(E::InvalidBranchError)?.to_owned(),
         Err(head_err) if head_err.code() == ErrorCode::UnbornBranch => {
             // TODO(gib): avoid fetching again here.
             {
@@ -112,8 +109,8 @@ pub(super) fn calculate_head(repo: &Repository, remote: &mut Remote) -> Result<S
             let default_branch = remote
                 .default_branch()?
                 .as_str()
-                .map(ToOwned::to_owned)
-                .ok_or(E::InvalidBranchError)?;
+                .wrap_err(E::InvalidBranchError)?
+                .to_owned();
             remote.disconnect()?;
             default_branch
         }

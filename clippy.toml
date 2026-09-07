@@ -4,27 +4,15 @@
 # https://rust-lang.github.io/rust-clippy/master/index.html#multiple_crate_versions
 # Check duplicates with `cargo +nightly tree --workspace --target all --duplicates`
 allowed-duplicate-crates = [
+  "base64",
+  "core-foundation",
   "dirs",
-  "dirs-sys",
   "getrandom",
-  "redox_users",
-  "regex-automata",
-  "regex-syntax",
-  "thiserror",
-  "thiserror-impl",
-  "unicode-width",
-  "wasi",
-  "windows-strings",
+  "libc",
+  "openssl-probe",
+  "simdutf8",
+  "syn",
   "windows-sys",
-  "windows-targets",
-  "windows_aarch64_gnullvm",
-  "windows_aarch64_msvc",
-  "windows_i686_gnu",
-  "windows_i686_gnullvm",
-  "windows_i686_msvc",
-  "windows_x86_64_gnu",
-  "windows_x86_64_gnullvm",
-  "windows_x86_64_msvc",
 ]
 
 # https://rust-lang.github.io/rust-clippy/master/index.html#unwrap_used

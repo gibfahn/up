@@ -177,7 +177,7 @@ fn parse_git_config(
     {
         let mut remote_names: Vec<String> = Vec::new();
         for opt_name in &repo.remotes()? {
-            remote_names.push(opt_name.ok_or(E::InvalidUtf8)?.to_owned());
+            remote_names.push(opt_name?.ok_or(E::InvalidUtf8)?.to_owned());
         }
         for order in remote_order {
             if let Some(pos) = remote_names.iter().position(|el| el == order) {

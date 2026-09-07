@@ -6,6 +6,7 @@ use crate::tasks::TaskError;
 use crate::tasks::task::TaskStatus;
 use camino::Utf8PathBuf;
 use clap::Parser;
+use color_eyre::eyre::Context;
 use color_eyre::eyre::Result;
 use displaydoc::Display;
 use git2::Remote;
@@ -131,15 +132,15 @@ pub struct GitRemote {
 impl GitRemote {
     /// Create a git remote from a git2-rs remote.
     pub(crate) fn from(remote: &Remote) -> Result<Self> {
-        let fetch_url = remote.url().ok_or(E::InvalidRemote)?.to_owned();
+        let fetch_url = remote.url().wrap_err(E::InvalidRemote)?.to_owned();
 
         let push_url = match remote.pushurl() {
-            Some(url) if url != fetch_url => Some(url.to_owned()),
+            Ok(Some(url)) if url != fetch_url => Some(url.to_owned()),
             _ => None,
         };
 
         Ok(Self {
-            name: remote.name().ok_or(E::InvalidRemote)?.to_owned(),
+            name: remote.name()?.ok_or(E::InvalidRemote)?.to_owned(),
             fetch_url,
             push_url,
         })

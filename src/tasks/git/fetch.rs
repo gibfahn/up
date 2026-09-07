@@ -77,14 +77,14 @@ pub(super) fn set_remote_head(
     default_branch: &str,
 ) -> Result<bool> {
     let mut did_work = false;
-    let remote_name = remote.name().ok_or(E::RemoteNameMissing)?;
+    let remote_name = remote.name()?.ok_or(E::RemoteNameMissing)?;
     let remote_ref = format!("refs/remotes/{remote_name}/HEAD");
     let short_branch = shorten_branch_ref(default_branch);
     let remote_head = format!("refs/remotes/{remote_name}/{short_branch}");
     debug!("Setting remote head for remote {remote_name}: {remote_ref} => {remote_head}",);
     match repo.find_reference(&remote_ref) {
         Ok(reference) => {
-            if matches!(reference.symbolic_target(), Some(target) if target == remote_head) {
+            if matches!(reference.symbolic_target(), Ok(Some(target)) if target == remote_head) {
                 debug!("Ref {remote_ref} already points to {remote_head}.",);
             } else {
                 warn!(

@@ -227,7 +227,7 @@ fn set_up_remote(repo: &Repository, remote_config: &GitRemote) -> Result<bool> {
         did_work = true;
         repo.remote(remote_name, &remote_config.fetch_url)
     })?;
-    if let Some(url) = remote.url()
+    if let Ok(url) = remote.url()
         && url != remote_config.fetch_url
     {
         debug!(
@@ -297,8 +297,8 @@ fn set_up_remote(repo: &Repository, remote_config: &GitRemote) -> Result<bool> {
     let default_branch = remote
         .default_branch()?
         .as_str()
-        .map(ToOwned::to_owned)
-        .ok_or(E::InvalidBranchError)?;
+        .wrap_err(E::InvalidBranchError)?
+        .to_owned();
     trace!(
         "Default branch for remote {:?}: {}",
         remote.name(),
@@ -318,7 +318,7 @@ pub(in crate::tasks::git) fn get_config_value(
 ) -> Result<Option<String>> {
     match config.get_entry(key) {
         Ok(push_remote_entry) if push_remote_entry.has_value() => {
-            let val = push_remote_entry.value().ok_or(E::InvalidBranchError)?;
+            let val = push_remote_entry.value().wrap_err(E::InvalidBranchError)?;
             trace!("Config value for {key} was {val}");
             Ok(Some(val.to_owned()))
         }

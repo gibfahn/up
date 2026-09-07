@@ -41,7 +41,7 @@ pub(super) fn prune_merged_branches(repo: &Repository, remote_name: &str) -> Res
         if branch.is_head() {
             let remote_ref_name = format!("refs/remotes/{remote_name}/HEAD");
             let remote_ref = repo.find_reference(&remote_ref_name)?;
-            let remote_head = remote_ref.symbolic_target().ok_or(E::NoHeadSet)?;
+            let remote_head = remote_ref.symbolic_target()?.ok_or(E::NoHeadSet)?;
             let short_branch = shorten_branch_ref(remote_head);
             let short_branch = short_branch.trim_start_matches(&format!("{remote_name}/"));
             // TODO(gib): Find better way to make branch_name long and short_branch short.
