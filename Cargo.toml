@@ -11,7 +11,7 @@ readme = "README.md"
 authors = ["Gibson Fahnestock <gibfahn@gmail.com>"]
 
 [workspace.lints.rust]
-unsafe_code = "forbid"
+unsafe_code = "deny"
 
 # up is the root package in this workspace.
 [package]
@@ -29,7 +29,6 @@ description = """
 up is a tool to help you keep your machine up to date.
 """
 documentation = "https://docs.rs/crate/up"
-homepage = "https://github.com/gibfahn/up"
 exclude = ["tests/"]
 
 [[bin]]
@@ -50,7 +49,6 @@ color-eyre = "0.6.5"
 dirs = "7.0.0"
 displaydoc = "0.2.7"
 duct = "1.1.2"
-envy = "0.4.2"
 git2 = { version = "0.21.0", features = [
   "ssh",
   "https",
@@ -74,7 +72,6 @@ serde_yaml = "0.9.34"
 shell-escape = "0.1.5"
 shellexpand = "3.1.2"
 thiserror = "2.0.20"
-toml = "1.1.5"
 tracing = "0.1.44"
 tracing-error = "0.2.1"
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
@@ -84,7 +81,6 @@ walkdir = "2.5.0"
 tracing-indicatif = "0.3.14"
 clap-markdown = "0.1.5"
 clap_mangen = "0.3.3"
-pretty_assertions = "1.4.1"
 
 [dev-dependencies]
 assert_cmd = "2.2.2"
@@ -96,3 +92,6 @@ test-log = { version = "0.2.21", default-features = false, features = [
   "trace",
 ] }
 testutils = { path = "./tests/testutils" }
+
+[lints]
+workspace = true

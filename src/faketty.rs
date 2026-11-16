@@ -3,6 +3,7 @@ Run a command in a fake tty
 Copied from <https://github.com/dtolnay/faketty/>, which unfortunately doesn't offer a library (see <https://github.com/dtolnay/faketty/issues/10>).
 */
 
+#![allow(unsafe_code)]
 #![deny(unsafe_op_in_unsafe_fn)]
 #![allow(
     clippy::empty_enums,

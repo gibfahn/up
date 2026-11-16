@@ -230,6 +230,7 @@ mod tests {
     /// modify the shared test environment.
     #[test]
     #[serial(home_dir)] // Test relies on or changes the $HOME env var.
+    #[allow(unsafe_code)]
     fn test_get_yaml_paths() -> Result<()> {
         // SAFETY: test has a serial block so won't be run in parallel.
         unsafe {
