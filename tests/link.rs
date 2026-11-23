@@ -25,6 +25,11 @@ fn test_new_link() -> Result<()> {
     ensure_utils::link(&home_dir.join("file"), &dotfile_dir.join("file"))?;
     // Links should be linked.
     ensure_utils::link(&home_dir.join("good_link"), &dotfile_dir.join("good_link"))?;
+    // Existing files identical to the dotfile should be replaced without a backup.
+    ensure_utils::link(
+        &home_dir.join("identical_file"),
+        &dotfile_dir.join("identical_file"),
+    )?;
     // Empty backup dir should be removed.
     ensure_utils::nothing_at(&backup_dir)?;
 

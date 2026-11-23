@@ -253,6 +253,12 @@ fn link_path(
                 to_path: backup_path,
                 source: e,
             })?;
+        } else if to_path_file_type.is_file() && files_identical(from_path, &to_path)? {
+            info!("Existing file at {to_path} is identical to {from_path}, replacing it.");
+            fs::remove_file(&to_path).map_err(|e| LinkError::DeleteError {
+                path: to_path.clone(),
+                source: e,
+            })?;
         } else if to_path_file_type.is_file() {
             warn!("Existing file at {to_path}, moving to {backup_dir}");
             let backup_path = backup_dir.join(rel_path);
@@ -286,6 +292,21 @@ fn link_path(
             }
             .into()
         })
+}
+
+/// Whether the files at `a` and `b` have the same contents (following symlinks).
+fn files_identical(a: &Utf8Path, b: &Utf8Path) -> Result<bool> {
+    let read = |path: &Utf8Path| {
+        fs::read(path).map_err(|e| LinkError::IoError {
+            path: path.to_owned(),
+            source: e,
+        })
+    };
+    // Check sizes first to avoid reading large files that obviously differ.
+    if a.metadata()?.len() != b.metadata()?.len() {
+        return Ok(false);
+    }
+    Ok(read(a)? == read(b)?)
 }
 
 #[derive(Error, Debug, Display)]
