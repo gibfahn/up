@@ -36,6 +36,26 @@ fn test_new_link() -> Result<()> {
     Ok(())
 }
 
+/// Make sure links point through a symlinked `dotfile_dir` rather than to its
+/// resolved path.
+#[test]
+fn test_symlinked_from_dir() -> Result<()> {
+    let temp_dir = testutils::temp_dir("up", testutils::function_path!())?;
+    let home_dir = temp_dir.join("home_dir");
+    let real_dotfile_dir = temp_dir.join("real_dotfile_dir");
+    let dotfile_dir = temp_dir.join("dotfile_dir");
+    fs::create_dir_all(&home_dir)?;
+    fs::create_dir_all(&real_dotfile_dir)?;
+    fs::write(real_dotfile_dir.join("file"), "file\n")?;
+    unix::fs::symlink(&real_dotfile_dir, &dotfile_dir)?;
+
+    run_link_cmd(&dotfile_dir, &home_dir, &temp_dir, LinkResult::Success)?;
+
+    ensure_utils::link(&home_dir.join("file"), &dotfile_dir.join("file"))?;
+
+    Ok(())
+}
+
 /// Set up a basic `home_dir`, run the link function against it, and make sure we
 /// get the expected changes.
 #[test]

@@ -128,7 +128,11 @@ pub(crate) fn run(config: LinkOptions, up_dir: &Utf8Path) -> Result<TaskStatus> 
     }
 }
 
-/// Ensure dir exists, and resolve symlinks to find it's canonical path.
+/// Ensure dir exists, and make it absolute.
+///
+/// Symlinks in the path are deliberately not resolved, so links point to the
+/// path the user configured (e.g. `~/code/dotfiles` rather than wherever
+/// `~/code` happens to be a symlink to).
 fn resolve_directory(dir_path: Utf8PathBuf, name: &str) -> Result<Utf8PathBuf> {
     ensure!(
         &dir_path.is_dir(),
@@ -138,13 +142,11 @@ fn resolve_directory(dir_path: Utf8PathBuf, name: &str) -> Result<Utf8PathBuf> {
         }
     );
 
-    dir_path.canonicalize_utf8().map_err(|e| {
-        LinkError::CanonicalizeError {
-            path: dir_path,
-            source: e,
-        }
-        .into()
-    })
+    let absolute_path = std::path::absolute(&dir_path).map_err(|e| LinkError::AbsoluteError {
+        path: dir_path,
+        source: e,
+    })?;
+    Ok(Utf8PathBuf::try_from(absolute_path)?)
 }
 
 /// Create the parent directory to create the symlink in.
@@ -319,9 +321,9 @@ pub enum LinkError {
         /// Directory path.
         path: Utf8PathBuf,
     },
-    /// Error canonicalizing `{path}`.
-    CanonicalizeError {
-        /// Path we failed  to canonicalize.
+    /// Error making `{path}` absolute.
+    AbsoluteError {
+        /// Path we failed to make absolute.
         path: Utf8PathBuf,
         /// Source error.
         source: io::Error,
